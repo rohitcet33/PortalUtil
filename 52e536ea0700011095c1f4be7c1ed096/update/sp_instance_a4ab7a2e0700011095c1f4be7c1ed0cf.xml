@@ -16,14 +16,14 @@
         <sys_created_by>rohit.kumar</sys_created_by>
         <sys_created_on>2021-11-29 03:47:40</sys_created_on>
         <sys_id>a4ab7a2e0700011095c1f4be7c1ed0cf</sys_id>
-        <sys_mod_count>18</sys_mod_count>
+        <sys_mod_count>32</sys_mod_count>
         <sys_name/>
         <sys_package display_value="Portal Util" source="x_26525_portal">52e536ea0700011095c1f4be7c1ed096</sys_package>
         <sys_policy/>
         <sys_scope display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</sys_scope>
         <sys_update_name>sp_instance_a4ab7a2e0700011095c1f4be7c1ed0cf</sys_update_name>
         <sys_updated_by>rohit.kumar</sys_updated_by>
-        <sys_updated_on>2021-11-30 10:50:56</sys_updated_on>
+        <sys_updated_on>2021-11-30 13:20:27</sys_updated_on>
         <title/>
         <url/>
         <widget_parameters><![CDATA[{
@@ -62,6 +62,22 @@
 	"page_target": {
 		"value": "_self",
 		"displayValue": "_self"
+	},
+	"pagination_position": {
+		"value": "right",
+		"displayValue": "right"
+	},
+	"show_page_count": {
+		"value": "true",
+		"displayValue": "true"
+	},
+	"max_record": {
+		"value": null,
+		"displayValue": ""
+	},
+	"max_record_page": {
+		"value": 5,
+		"displayValue": "5"
 	}
 }]]></widget_parameters>
     </sp_instance>
