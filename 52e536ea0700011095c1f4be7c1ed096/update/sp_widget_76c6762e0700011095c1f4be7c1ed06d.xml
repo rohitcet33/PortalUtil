@@ -23,12 +23,24 @@
 			return "header1";
 	}
 	
+//Sorting
+$scope.reverse = false;
+$scope.sortKey = 'number';
+$scope.sort = function (keyname) {
+$scope.sortKey = keyname;
+$scope.reverse = !$scope.reverse;
+//$scope.currentIndex=0;
+$rootScope.$broadcast('send-pagination-data', c.data.dataOptins);
+}
+//End Shorting
+	
 };]]></client_script>
         <controller_as>c</controller_as>
         <css>#customers {
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
+  table-layout:fixed;
 }
 
 #customers td, #customers th {
@@ -69,7 +81,14 @@ th{
 white-space: nowrap;
 min-width: 72px;
 text-align: center;
-}</css>
+}
+
+.sortorder:after {
+   content: '\25b2';
+ } 
+ .sortorder.descending:after {
+    content: '\25bc';
+ }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description/>
@@ -82,13 +101,14 @@ text-align: center;
   
 }]]></link>
         <name>Custom List</name>
-        <option_schema>[{"hint":"incident","name":"table_name","section":"Data","label":"Table Name","type":"string"},{"hint":"active=true","name":"query","section":"Data","label":"Query","type":"string"},{"hint":"name,state","name":"fields","section":"Data","label":"Fields","type":"string"},{"name":"pagination","section":"Behavior","default_value":"false","label":"Pagination","type":"boolean"},{"name":"filter_breadcrumbs","section":"Behavior","default_value":"false","label":"Filter Breadcrumbs","type":"boolean"},{"hint":"State, Assignment Group","name":"table_header","section":"Data","label":"Table Header","type":"string"}]</option_schema>
+        <option_schema>[{"hint":"incident","name":"table_name","section":"Data","label":"Table Name","type":"string"},{"hint":"active=true","name":"query","section":"Data","label":"Query","type":"string"},{"hint":"name,state","name":"fields","section":"Data","label":"Fields","type":"string"},{"name":"pagination","section":"Behavior","default_value":"false","label":"Pagination","type":"boolean"},{"name":"filter_breadcrumbs","section":"Behavior","default_value":"false","label":"Filter Breadcrumbs","type":"boolean"},{"hint":"State, Assignment Group","name":"table_header","section":"Data","label":"Table Header","type":"string"},{"hint":"Maximum string length of every cell","name":"max_value","section":"Data","default_value":"150","label":"Max Value String Count","type":"integer"},{"displayValue":"Page","name":"link_to_page","section":"Presentation","label":"Link to a page","type":"reference","value":"sp_page","ed":{"reference":"sp_page"}},{"hint":"Link should open on same page or not","name":"page_target","section":"Presentation","default_value":"_self","label":"Target","type":"choice","choices":[{"label":"_blank","value":"_blank"},{"label":"_self","value":"_self"},{"label":"_parent","value":"_parent"},{"label":"_top","value":"_top"}]}]</option_schema>
         <public>false</public>
         <roles/>
         <script><![CDATA[(function() {
   /* populate the 'data' object */
   /* e.g., data.table = $sp.getValue('table'); */
 	var table=options.table_name;
+	data.table=table;
 	var query=options.query;
 	var arrayData=[];
 	var fields=options.fields;
@@ -98,6 +118,14 @@ text-align: center;
 	data.tableHeader=tableHeader.split(',')
 	data.isPagination=options.pagination || false;
 	data.isbreadcrumbs=options.filter_breadcrumbs||false;
+	data.max_value=options.max_value || 150;
+	data.page_target=options.page_target;
+	data.page_portal= $sp.getValue('url_suffix');
+	var sp_page = new GlideRecord('sp_page');
+	if(sp_page.get(options.link_to_page))
+		data.link_to_page=sp_page.getValue('id');
+	else
+		data.link_to_page='';
 	
 	
 	data.filter = data.filter ||(input && input.filter)
@@ -110,8 +138,11 @@ text-align: center;
 	while(gr.next()){
 		var obj={};
 		for(var i=0;i<listFields.length;i++){
-			obj[listFields[i]]=gr.getDisplayValue(listFields[i]);
+			var value=gr.getDisplayValue(listFields[i]);
+			value=value.slice(0, data.max_value);
+			obj[listFields[i]]=value;
 		}
+		obj.sys_id= gr.getValue('sys_id');
 		arrayData.push(obj)
 	}
 	data.rec=arrayData;
@@ -136,14 +167,14 @@ text-align: center;
         <sys_created_by>rohit.kumar</sys_created_by>
         <sys_created_on>2021-11-29 03:27:10</sys_created_on>
         <sys_id>76c6762e0700011095c1f4be7c1ed06d</sys_id>
-        <sys_mod_count>82</sys_mod_count>
+        <sys_mod_count>127</sys_mod_count>
         <sys_name>Custom List</sys_name>
         <sys_package display_value="Portal Util" source="x_26525_portal">52e536ea0700011095c1f4be7c1ed096</sys_package>
         <sys_policy/>
         <sys_scope display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</sys_scope>
         <sys_update_name>sp_widget_76c6762e0700011095c1f4be7c1ed06d</sys_update_name>
         <sys_updated_by>rohit.kumar</sys_updated_by>
-        <sys_updated_on>2021-11-30 05:33:47</sys_updated_on>
+        <sys_updated_on>2021-11-30 10:52:02</sys_updated_on>
         <template><![CDATA[<div>
 <!-- your widget template -->
   <!--{{c.data.dataOptins}} -->
@@ -153,12 +184,17 @@ text-align: center;
 
   <table id="customers">
     <tr>
-    <th ng-repeat="x in data.tableHeader track by $index " ng-class="headerClass($index)">{{x}}</th>
+    <th ng-repeat="x in data.tableHeader track by $index " ng-class="headerClass($index)" ng-click="sort(data.listFields[$index])">{{x}}
+      <span class="sortorder descending" ng-show="(sortKey==data.listFields[$index] && reverse==false)"></span>
+      <span class="sortorder" ng-show="(sortKey==data.listFields[$index] && reverse==true)"></span>
+      </th>
     </tr>
     
-    <tr ng-repeat="c in data.rec | limitTo:c.data.dataOptins.maxrecord: c.data.dataOptins.currentIndex " ng-if="data.isPagination == 'true'">
+    <tr ng-repeat="c in data.rec | orderBy: sortKey:reverse | limitTo:c.data.dataOptins.maxrecord: c.data.dataOptins.currentIndex " ng-if="data.isPagination == 'true'">
       <td ng-repeat="cal in data.listFields track by $index ">
-        <p>{{c[cal]}}</p>
+         <p ng-if="$index =='0' && data.link_to_page" ><a href="/{{data.page_portal}}?id={{data.link_to_page}}&sys_id={{c['sys_id']}}&table={{data.table}}" target="{{data.page_target}}">{{c[cal]}}</a></p>
+         <p ng-if="$index =='0' && !data.link_to_page" >{{c[cal]}}</p>
+         <p ng-if="$index !='0'" >{{c[cal]}}</p>
       </td>
     </tr>
     
