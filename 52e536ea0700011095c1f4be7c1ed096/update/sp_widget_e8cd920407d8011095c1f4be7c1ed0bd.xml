@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function($scope) {
+  /* widget controller */
+  var c = this;
+	$scope.redirect = function (obj){
+		var link='/sp?id=sc_cat_item&sys_id='+obj.catalog_item+'&sysparm_variables=%7B"'+obj.field+'":"'+$scope.data.sys_id+'"%7D';
+		window.open(link,obj.action);
+	}
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id/>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Action Redirect</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+	data.sys_id=$sp.getParameter("sys_id");
+	data.rec=[];
+	var gr = new GlideRecord('x_26525_portal_redirect_map');
+	gr.addEncodedQuery('active=true');
+	gr.orderBy('order');
+	gr.query();
+	while(gr.next()){
+		var obj={};
+		obj.label=gr.getValue('label');
+		obj.field=gr.getValue('id_field');
+		obj.catalog_item=gr.getValue('catalog_item');
+		obj.catalog_name= gr.catalog_item.name.toString();
+		obj.action=gr.getValue('redirect_type');
+		obj.button_class = gr.getValue('button_class');
+		obj.order=gr.getValue('order');
+		data.rec.push(obj);
+	}
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>rohit.kumar</sys_created_by>
+        <sys_created_on>2021-12-03 17:28:26</sys_created_on>
+        <sys_id>e8cd920407d8011095c1f4be7c1ed0bd</sys_id>
+        <sys_mod_count>12</sys_mod_count>
+        <sys_name>Action Redirect</sys_name>
+        <sys_package display_value="Portal Util" source="x_26525_portal">52e536ea0700011095c1f4be7c1ed096</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</sys_scope>
+        <sys_update_name>sp_widget_e8cd920407d8011095c1f4be7c1ed0bd</sys_update_name>
+        <sys_updated_by>rohit.kumar</sys_updated_by>
+        <sys_updated_on>2021-12-03 18:10:33</sys_updated_on>
+        <template><![CDATA[<div>
+  <button type="button" ng-repeat="x in data.rec" ng-click="redirect(x)" class="btn btn-{{x.button_class}}" style="margin: 6px;">{{x.label}}</button>
+</div>]]></template>
+    </sp_widget>
+</record_update>

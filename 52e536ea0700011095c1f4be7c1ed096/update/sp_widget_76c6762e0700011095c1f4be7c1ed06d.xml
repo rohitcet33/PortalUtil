@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[api.controller=function($scope,$rootScope,spUtil) {
+        <client_script><![CDATA[api.controller=function($scope,$rootScope,spUtil,spModal, $window) {
   /* widget controller */
   var c = this;
 	$rootScope.$on('pagination-data', function(event,data) {
@@ -33,6 +33,20 @@ $scope.reverse = !$scope.reverse;
 $rootScope.$broadcast('send-pagination-data', c.data.dataOptins);
 }
 //End Shorting
+	
+	$rootScope.$on('personalizationDone', function(event,data) {
+		$window.location.reload(); // refresh to new layout
+		});
+ c.personalize = function(widgetId, widgetInput) {
+        spModal.open({
+            title: 'Personalize List Columns',
+            widget: widgetId, 
+            widgetInput: $scope.data.personalizeParms || {}
+        }).then(function(){
+					$rootScope.$emit('saveChosen');
+       
+        })      
+    }
 	
 };]]></client_script>
         <controller_as>c</controller_as>
@@ -101,7 +115,7 @@ text-align: center;
   
 }]]></link>
         <name>Custom List</name>
-        <option_schema>[{"hint":"incident","name":"table_name","section":"Data","label":"Table Name","type":"string"},{"hint":"active=true","name":"query","section":"Data","label":"Query","type":"string"},{"hint":"name,state","name":"fields","section":"Data","label":"Fields","type":"string"},{"name":"pagination","section":"Behavior","default_value":"false","label":"Pagination","type":"boolean"},{"name":"filter_breadcrumbs","section":"Behavior","default_value":"false","label":"Filter Breadcrumbs","type":"boolean"},{"name":"show_page_count","section":"Behavior","default_value":"false","label":"Show Page Count","type":"boolean"},{"hint":"State, Assignment Group","name":"table_header","section":"Data","label":"Table Header","type":"string"},{"hint":"Maximum string length of every cell","name":"max_value","section":"Data","default_value":"150","label":"Max Value String Count","type":"integer"},{"displayValue":"Page","name":"link_to_page","section":"Presentation","label":"Link to a page","type":"reference","value":"sp_page","ed":{"reference":"sp_page"}},{"hint":"Link should open on same page or not","name":"page_target","section":"Presentation","default_value":"_self","label":"Target","type":"choice","choices":[{"label":"_blank","value":"_blank"},{"label":"_self","value":"_self"},{"label":"_parent","value":"_parent"},{"label":"_top","value":"_top"}]},{"name":"pagination_position","section":"Behavior","label":"Pagination Position","type":"choice","choices":[{"label":"left","value":"left"},{"label":"right","value":"right"}]},{"hint":"Maximum record in a page","name":"max_record_page","section":"Data","default_value":"5","label":"Max record in a page","type":"integer"}]</option_schema>
+        <option_schema>[{"hint":"incident","name":"table_name","section":"Data","label":"Table Name","type":"string"},{"hint":"active=true","name":"query","section":"Data","label":"Query","type":"string"},{"hint":"name,state","name":"fields","section":"Data","label":"Fields","type":"string"},{"name":"pagination","section":"Behavior","default_value":"false","label":"Pagination","type":"boolean"},{"name":"filter_breadcrumbs","section":"Behavior","default_value":"false","label":"Filter Breadcrumbs","type":"boolean"},{"name":"show_page_count","section":"Behavior","default_value":"false","label":"Show Page Count","type":"boolean"},{"hint":"Maximum string length of every cell","name":"max_value","section":"Data","default_value":"150","label":"Max Value String Count","type":"integer"},{"displayValue":"Page","name":"link_to_page","section":"Presentation","label":"Link to a page","type":"reference","value":"sp_page","ed":{"reference":"sp_page"}},{"hint":"Link should open on same page or not","name":"page_target","section":"Presentation","default_value":"_self","label":"Target","type":"choice","choices":[{"label":"_blank","value":"_blank"},{"label":"_self","value":"_self"},{"label":"_parent","value":"_parent"},{"label":"_top","value":"_top"}]},{"name":"pagination_position","section":"Behavior","label":"Pagination Position","type":"choice","choices":[{"label":"left","value":"left"},{"label":"right","value":"right"}]},{"hint":"Maximum record in a page","name":"max_record_page","section":"Data","default_value":"5","label":"Max record in a page","type":"integer"}]</option_schema>
         <public>false</public>
         <roles/>
         <script><![CDATA[(function() {
@@ -109,13 +123,15 @@ text-align: center;
   /* e.g., data.table = $sp.getValue('table'); */
 	var table=options.table_name;
 	data.table=table;
+	data.view="sp";
 	var query=options.query;
 	var arrayData=[];
 	var fields=options.fields;
 	var listFields=fields.split(',');
 	data.listFields=listFields;
-	var tableHeader=options.table_header;
-	data.tableHeader=tableHeader.split(',')
+	
+	/*var tableHeader=options.table_header;
+	data.tableHeader=tableHeader.split(',') */
 	data.isPagination=options.pagination || false;
 	data.isbreadcrumbs=options.filter_breadcrumbs||false;
 	data.max_value=options.max_value || 150;
@@ -132,20 +148,7 @@ text-align: center;
 	if(data.filter || (input && input.filter)){
 		query=query+'^'+data.filter;
 	}
-	var gr = new GlideRecord(table);
-	gr.addEncodedQuery(query);
-	gr.query();
-	while(gr.next()){
-		var obj={};
-		for(var i=0;i<listFields.length;i++){
-			var value=gr.getDisplayValue(listFields[i]);
-			value=value.slice(0, data.max_value);
-			obj[listFields[i]]=value;
-		}
-		obj.sys_id= gr.getValue('sys_id');
-		arrayData.push(obj)
-	}
-	data.rec=arrayData;
+	
 	/* Pagination Start */
 	data.dataOptins={
 		total_record_row:arrayData.length,
@@ -163,23 +166,72 @@ text-align: center;
 	};
 	data.filterBreadcrumbs = $sp.getWidget('widget-filter-breadcrumbs', breadcrumbWidgetParams);
 	
+	var tableHeader=[];
+	data.fields_array = CheckPreference(data.table, data.view)|| fields.split(',');
+	
+	var gr = new GlideRecord(table);
+	gr.addEncodedQuery(query);
+	gr.query();
+	while(gr.next()){
+		var obj={};
+		for(var i=0;i<data.fields_array.length;i++){
+			try{
+			var value=gr.getDisplayValue(data.fields_array[i]);
+			value=value.slice(0, data.max_value);
+			obj[data.fields_array[i]]=value;
+			}catch(ex){}
+		}
+		obj.sys_id= gr.getValue('sys_id');
+		arrayData.push(obj)
+	}
+	data.rec=arrayData;
+	
+	
+	for(var k =0; k< data.fields_array.length; k++){
+		var field = data.fields_array[k];
+		var ge = gr.getElement(field);
+		tableHeader.push(ge.getLabel().toString());
+	}
+	data.tableHeader=tableHeader;
+	var personalizeObj = {};
+	personalizeObj.table = data.table;
+	personalizeObj.view = data.view;
+	data.personalizeParms = personalizeObj;
+	
+	function CheckPreference(table, view){
+	var userPref = new GlideRecord('sys_user_preference');
+		userPref.addQuery('name', table+'_'+view+'_list.view');
+		userPref.addQuery('user', gs.getUserID());
+		userPref.query();
+		if (userPref.next()) {
+			var list;
+			try{
+list= userPref.value.split(',') ;
+			}catch(ex){
+				list='';
+			}
+			return list;
+		}
+}
+	
 })();]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
         <sys_created_by>rohit.kumar</sys_created_by>
         <sys_created_on>2021-11-29 03:27:10</sys_created_on>
         <sys_id>76c6762e0700011095c1f4be7c1ed06d</sys_id>
-        <sys_mod_count>143</sys_mod_count>
+        <sys_mod_count>172</sys_mod_count>
         <sys_name>Custom List</sys_name>
         <sys_package display_value="Portal Util" source="x_26525_portal">52e536ea0700011095c1f4be7c1ed096</sys_package>
         <sys_policy/>
         <sys_scope display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</sys_scope>
         <sys_update_name>sp_widget_76c6762e0700011095c1f4be7c1ed06d</sys_update_name>
-        <sys_updated_by>rohit.kumar</sys_updated_by>
-        <sys_updated_on>2021-11-30 13:13:11</sys_updated_on>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-01-11 12:12:38</sys_updated_on>
         <template><![CDATA[<div>
 <!-- your widget template -->
   <!--{{c.data.dataOptins}} -->
+   <span class="glyphicon glyphicon-cog" ng-click="c.personalize('user_personalize_list')" aria-hidden="true"></span>
   <div class="filter-breadcrumbs" ng-if="data.isbreadcrumbs == 'true'">
 	    		<sp-widget widget="data.filterBreadcrumbs"></sp-widget>
    </div>
@@ -193,7 +245,7 @@ text-align: center;
     </tr>
     
     <tr ng-repeat="c in data.rec | orderBy: sortKey:reverse | limitTo:c.data.dataOptins.maxrecord: c.data.dataOptins.currentIndex " ng-if="data.isPagination == 'true'">
-      <td ng-repeat="cal in data.listFields track by $index ">
+      <td ng-repeat="cal in data.fields_array track by $index ">
          <p ng-if="$index =='0' && data.link_to_page" ><a href="/{{data.page_portal}}?id={{data.link_to_page}}&sys_id={{c['sys_id']}}&table={{data.table}}" target="{{data.page_target}}">{{c[cal]}}</a></p>
          <p ng-if="$index =='0' && !data.link_to_page" >{{c[cal]}}</p>
          <p ng-if="$index !='0'" >{{c[cal]}}</p>

@@ -16,14 +16,14 @@
         <sys_created_by>rohit.kumar</sys_created_by>
         <sys_created_on>2021-11-29 03:47:40</sys_created_on>
         <sys_id>a4ab7a2e0700011095c1f4be7c1ed0cf</sys_id>
-        <sys_mod_count>32</sys_mod_count>
+        <sys_mod_count>41</sys_mod_count>
         <sys_name/>
         <sys_package display_value="Portal Util" source="x_26525_portal">52e536ea0700011095c1f4be7c1ed096</sys_package>
         <sys_policy/>
         <sys_scope display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</sys_scope>
         <sys_update_name>sp_instance_a4ab7a2e0700011095c1f4be7c1ed0cf</sys_update_name>
-        <sys_updated_by>rohit.kumar</sys_updated_by>
-        <sys_updated_on>2021-11-30 13:20:27</sys_updated_on>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-12-16 02:50:10</sys_updated_on>
         <title/>
         <url/>
         <widget_parameters><![CDATA[{
@@ -36,8 +36,8 @@
 		"displayValue": ""
 	},
 	"fields": {
-		"value": "number,state,short_description,caller_id,description,sys_created_on",
-		"displayValue": "number,state,short_description,caller_id,description,sys_created_on"
+		"value": "number,state,priority,assignment_group,sys_created_on,sys_created_by",
+		"displayValue": "number,state,priority,assignment_group,sys_created_on,sys_created_by"
 	},
 	"pagination": {
 		"value": "true",
@@ -48,16 +48,16 @@
 		"displayValue": "true"
 	},
 	"table_header": {
-		"value": "Number,State,Short Description,Caller,Description,Created",
-		"displayValue": "Number,State,Short Description,Caller,Description,Created"
+		"value": "Number,State,Priority,Assignment group,Created,Created By",
+		"displayValue": "Number,State,Priority,Assignment group,Created,Created By"
 	},
 	"max_value": {
 		"value": 100,
 		"displayValue": "100"
 	},
 	"link_to_page": {
-		"value": "ed5f8ec347730200ba13a5554ee49046",
-		"displayValue": "form"
+		"value": "4b03ea0807d8011095c1f4be7c1ed0dd",
+		"displayValue": "custom_form"
 	},
 	"page_target": {
 		"value": "_self",
@@ -68,8 +68,8 @@
 		"displayValue": "right"
 	},
 	"show_page_count": {
-		"value": "true",
-		"displayValue": "true"
+		"value": "false",
+		"displayValue": "false"
 	},
 	"max_record": {
 		"value": null,

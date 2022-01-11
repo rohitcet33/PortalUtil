@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="Redirect Map" max_length="40" name="x_26525_portal_redirect_map" sizeclass="2" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Active" max_length="40" name="active" type="boolean"/>
+        <element attributes="encode_utf8=false" label="Apply on page" max_length="32" name="apply_on_page" reference="sp_page" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" choice="3" default="basic" label="Button Class" max_length="40" name="button_class" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Basic" sequence="0" value="basic"/>
+                <element inactive_on_update="false" label="Default" sequence="1" value="default"/>
+                <element inactive_on_update="false" label="Primary" sequence="2" value="primary"/>
+                <element inactive_on_update="false" label="Success" sequence="3" value="success"/>
+                <element inactive_on_update="false" label="Info" sequence="4" value="info"/>
+                <element inactive_on_update="false" label="Warning" sequence="5" value="warning"/>
+                <element inactive_on_update="false" label="Danger" sequence="6" value="danger"/>
+                <element inactive_on_update="false" label="Link" sequence="7" value="link"/>
+            </choice>
+        </element>
+        <element attributes="encode_utf8=false" label="Catalog Item" max_length="32" name="catalog_item" reference="sc_cat_item" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="ID Field" max_length="40" name="id_field" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Label" max_length="40" name="label" type="string"/>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Order" max_length="40" name="order" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="3" default="_self" label="Redirect Type" max_length="40" name="redirect_type" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Self" sequence="0" value="_self"/>
+                <element inactive_on_update="false" label="New" sequence="1" value="_blank"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="catalog_item"/>
+        </index>
+        <index name="index2">
+            <element name="apply_on_page"/>
+        </index>
+    </element>
+</database>
