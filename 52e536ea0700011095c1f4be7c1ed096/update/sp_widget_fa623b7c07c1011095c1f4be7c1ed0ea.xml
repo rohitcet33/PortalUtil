@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function($scope) {
+  /* widget controller */
+  var c = this;
+	$scope.selected ="";
+	$scope.redirect = function (obj){
+		var link='/sp?id=sc_cat_item&sys_id='+obj.catalog_item+'&sysparm_variables=%7B"'+obj.field+'":"'+$scope.data.sys_id+'"%7D';
+		window.open(link,obj.action);
+	}
+	$scope.selectAction = function (){
+		if($scope.selected != ''){
+		var data=$scope.data.rec;
+		for(var i=0; i< data.length;i++){
+			if(data[i].action_name == $scope.selected){
+				var code=data[i].script;
+				eval(code);
+			}
+		}
+		}
+	}
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.action_box{
+  margin-top: 5px;
+  min-width: 137px;
+  margin-left: 23px;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>list_action</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>List Action</name>
+        <option_schema>[{"name":"datarec","section":"other","label":"datarec","type":"string"},{"name":"data_table","section":"other","label":"datatable","type":"string"}]</option_schema>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+	data.sys_id=$sp.getParameter("sys_id");
+	data.rec=[];
+	data.datatable=options.datatable;
+	var gr = new GlideRecord('x_26525_portal_list_action');
+	gr.addQuery('table',data.datatable)
+	gr.addEncodedQuery('active=true');
+	gr.orderBy('order');
+	gr.query();
+	while(gr.next()){
+		var obj={};
+		obj.action_name=gr.getValue('action_name');
+		obj.order=gr.getValue('order');
+		obj.script=gr.getValue('script');
+		data.rec.push(obj);
+	}
+  data.list = options.datarec;
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-01-12 14:20:27</sys_created_on>
+        <sys_id>fa623b7c07c1011095c1f4be7c1ed0ea</sys_id>
+        <sys_mod_count>33</sys_mod_count>
+        <sys_name>List Action</sys_name>
+        <sys_package display_value="Portal Util" source="x_26525_portal">52e536ea0700011095c1f4be7c1ed096</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</sys_scope>
+        <sys_update_name>sp_widget_fa623b7c07c1011095c1f4be7c1ed0ea</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-01-13 03:29:25</sys_updated_on>
+        <template><![CDATA[<div>
+  <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" style="margin-left: 10px;">
+  <select class="action_box" ng-model="selected" ng-change="selectAction()">
+  <option value="">Select</option>
+  <option ng-repeat="x in data.rec" value="{{x.action_name}}">{{x.action_name}}</option>
+</select>
+  <!-- <button type="button" ng-repeat="x in data.rec" ng-click="redirect(x)" class="btn btn-{{x.button_class}}" style="margin: 6px;">{{x.action_name}}</button> -->
+ List Action {{data.list}}
+</div>]]></template>
+    </sp_widget>
+</record_update>

@@ -17,7 +17,7 @@
         <element attributes="encode_utf8=false" label="Catalog Item" max_length="32" name="catalog_item" reference="sc_cat_item" type="reference"/>
         <element attributes="edge_encryption_enabled=true" label="ID Field" max_length="40" name="id_field" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="Label" max_length="40" name="label" type="string"/>
-        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" read_only="true" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="Order" max_length="40" name="order" type="string"/>
         <element attributes="edge_encryption_enabled=true" choice="3" default="_self" label="Redirect Type" max_length="40" name="redirect_type" type="string">
             <choice>
