@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>$dark-blue: #26293C&#13;
+$light-green: #B2D9A6&#13;
+$yellow: #FFD433&#13;
+$gray: #c0c3d7&#13;
+$light-blue: #C6E1ED&#13;
+$light-pink: #FFD3D4&#13;
+$orange: #FF582C&#13;
+$light-orange: lighten($orange, 15%)&#13;
+$purple: #782C4A&#13;
+$light-purple: lighten($purple, 35%)&#13;
+$red: #c0392b&#13;
+$pale-red: rgba($red, .6)&#13;
+&#13;
+body&#13;
+  background-color: darken($dark-blue, 5%)&#13;
+  font-family: Nunito, sans-serif&#13;
+  overflow-x: hidden&#13;
+  @media (max-width: 705px)&#13;
+    font-size: .8em&#13;
+&#13;
+.deck&#13;
+  position: relative&#13;
+  max-width: 500px&#13;
+  width: 100%&#13;
+  margin: 5em auto 3em&#13;
+  @media (max-width: 705px)&#13;
+    margin: 4em auto&#13;
+  &amp;:before&#13;
+    content: ''&#13;
+    position: absolute&#13;
+    width: 120%&#13;
+    height: 95%&#13;
+    top: -1.5em&#13;
+    left: 0em&#13;
+    border-radius: 8px&#13;
+    background: linear-gradient(109.61deg,lighten($dark-blue, 3%) 4.26%,darken($dark-blue, 3%) 84.84%)&#13;
+    @media (max-width: 550px)&#13;
+      left: 1.5em&#13;
+.card&#13;
+  position: relative&#13;
+  background-color: lighten($dark-blue, 5%)&#13;
+  padding: 1em&#13;
+  z-index: 5&#13;
+  border-radius: 2px&#13;
+  box-shadow: 4px 4px 20px rgba(0,0,0,.3)&#13;
+  transition: 200ms ease-in-out&#13;
+  + .card&#13;
+    margin-top: 1em&#13;
+  &amp;:hover&#13;
+    z-index: 7&#13;
+    transform: scale(1.05)&#13;
+    box-shadow: 0 4px 25px rgba(0,0,0,.4)&#13;
+  &amp;:first-of-type&#13;
+    margin-left: -3em&#13;
+    margin-right: 3em&#13;
+    @media (max-width: 705px)&#13;
+      margin-left: -1em&#13;
+      margin-right: 1em&#13;
+    @media (max-width: 550px)&#13;
+      margin: 0&#13;
+  &amp;:nth-of-type(2)&#13;
+    margin-left: 5em&#13;
+    margin-right: -5em&#13;
+    margin-top: -6em&#13;
+    @media (max-width: 705px)&#13;
+      margin-left: 1em&#13;
+      margin-right: -1em&#13;
+      margin-top: 1em&#13;
+    @media (max-width: 550px)&#13;
+      margin: 1em 0 0&#13;
+  &amp;:nth-of-type(3)&#13;
+    margin-top: -2em&#13;
+    margin-left: -1em&#13;
+    margin-right: 1em&#13;
+    @media (max-width: 705px)&#13;
+      margin-left: -1em&#13;
+      margin-right: 1em&#13;
+      margin-top: 1em&#13;
+      &amp;:after&#13;
+        content: ''&#13;
+        position: absolute&#13;
+        left: 0&#13;
+        right: 0&#13;
+        bottom: -1em&#13;
+        display: block&#13;
+        border-bottom: 5px solid $pale-red&#13;
+    @media (max-width: 550px)&#13;
+      margin: 1em 0 0&#13;
+.cardHeader&#13;
+  display: grid&#13;
+  grid-template-columns: 36px auto 100px&#13;
+  align-items: center&#13;
+  text-transform: uppercase&#13;
+  .cardHeader_type&#13;
+    color: $yellow&#13;
+    margin: 10px&#13;
+  .cardHeader_account&#13;
+    color: $light-blue&#13;
+    font-size: .85em&#13;
+    font-weight: 600&#13;
+    letter-spacing: 1px&#13;
+  .cardHeader_date&#13;
+    margin: 10px&#13;
+    color: $light-blue&#13;
+    font-size: .85em&#13;
+    font-weight: 600&#13;
+    text-align: right&#13;
+.cardBody&#13;
+  display: flex&#13;
+  margin: 0 10px 10px&#13;
+  .cardText&#13;
+    margin: 0 10px 0 0&#13;
+    white-space: pre-line&#13;
+    color: $gray&#13;
+    font-weight: 400&#13;
+    line-height: 1.5&#13;
+    .cardText_highlight&#13;
+      color: lighten($yellow, 15%)&#13;
+  .cardStats&#13;
+    font-size: .9em&#13;
+    text-align: right&#13;
+    .cardStats_stat&#13;
+      display: inline-block&#13;
+      white-space: nowrap&#13;
+      + .cardStats_stat&#13;
+        margin-top: 5px&#13;
+      &amp;.cardStats_stat-likes&#13;
+        color: $light-pink&#13;
+      &amp;.cardStats_stat-retweets&#13;
+        color: $light-green&#13;
+      &amp;.cardStats_stat-shares&#13;
+        color: $light-purple&#13;
+      &amp;.cardStats_stat-comments&#13;
+        color: $light-orange&#13;
+&#13;
+svg&#13;
+  position: absolute&#13;
+  top: 0&#13;
+  max-width: 90vw&#13;
+  min-width: 500px&#13;
+  max-height: 100vh&#13;
+  min-height: 725px&#13;
+  fill: $pale-red&#13;
+  @media (max-width: 705px)&#13;
+    display: none&#13;
+  path:nth-of-type(1)&#13;
+    transform: scale(.3) translateY(250px) translateX(15px)&#13;
+  path:nth-of-type(2)&#13;
+    transform: scale(.3) translateY(230px) translateX(10px)&#13;
+  path:nth-of-type(3)&#13;
+    transform: scale(.3) translateX(256px) translateY(39px)&#13;
+  path:nth-of-type(4)&#13;
+    transform: scale(.3) translateY(175px)&#13;
+  path:nth-of-type(5)&#13;
+    transform: scale(.3) translateX(267px) translateY(50px)&#13;
+  path:nth-of-type(6)&#13;
+    transform: scale(.3) translateY(170px) translateX(10px)&#13;
+  path:nth-of-type(7)&#13;
+    transform: scale(.3) translateY(150px)&#13;
+  path:nth-of-type(8)&#13;
+    transform: scale(.3) translateY(150px)&#13;
+  path:nth-of-type(9)&#13;
+    transform: scale(.3) translateX(230px) translateY(-34px)&#13;
+  path:nth-of-type(10)&#13;
+    transform: scale(.3) translateX(354px) translateY(-35px) rotateY(180deg) rotate(25deg)&#13;
+  path:nth-of-type(11)&#13;
+    transform: scale(.3) translateY(85px) translateX(-15px)&#13;
+  </css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>card-stacked</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Card-Stacked</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-01-27 03:33:43</sys_created_on>
+        <sys_id>280e62a50711011095c1f4be7c1ed0ad</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Card-Stacked</sys_name>
+        <sys_package display_value="Portal Util" source="x_26525_portal">52e536ea0700011095c1f4be7c1ed096</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</sys_scope>
+        <sys_update_name>sp_widget_280e62a50711011095c1f4be7c1ed0ad</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-01-27 03:33:43</sys_updated_on>
+        <template><![CDATA[<div class='deck'>
+  <div class='card'>
+    <header class='cardHeader'>
+      <i class='fab fa-instagram cardHeader_type'></i>
+      <span class='cardHeader_account'>@hongkongfp</span>
+      <span class='cardHeader_date'>Jul 1 6:03</span>
+    </header>
+    <div class='cardBody'>
+      <p class='cardText'>On Tuesday, China's National People's Congress Standing Committee unanimously passed a controversial national security law for Hong Kong. The law, which criminalises acts of secession, subversion, foreign interference and terrorism, was promulgated and gazetted on the same day with immediate effect. Details were only revealed late at night as it was directly inserted into the Annex III of the semi-autonomous region's mini-constitution, bypassing the local legislature.
+        <span class='cardText_highlight'>#hongkong</span> <span class='cardText_highlight'>#china</span> <span class='cardText_highlight'>#humanrights</span> <span class='cardText_highlight'>#hk</span></p>
+      <section class='cardStats'>
+        <span class='cardStats_stat cardStats_stat-likes'>2155 <i class='far fa-heart fa-fw'></i></span>
+        <span class='cardStats_stat cardStats_stat-comments'>87 <i class='far fa-comment fa-fw'></i></span>
+        </span>
+    </div>
+  </div>
+
+  <div class='card'>
+    <header class='cardHeader'>
+      <i class='fab fa-facebook-f cardHeader_type'></i>
+      <span class='cardHeader_account'>@hongkongfp</span>
+      <span class='cardHeader_date'>Jul 2 11:49</span>
+    </header>
+    <div class='cardBody'>
+      <p class='cardText'>"Liberate Hong Kong; revolution of our times," is pro-independence, secessionist or subversive, and thus criminalised under the newly-enacted national security law, the government says.
+        Law scholar Benny Tai said: "The reality is, under the Hong Kong national security law, every sentence said by every person at every moment could touch the red line and be said as violating the law. How could the national security law only targets a small group of people."</p>
+      <section class='cardStats'>
+        <span class='cardStats_stat cardStats_stat-likes'>857 <i class='far fa-heart fa-fw'></i></span>
+        <span class='cardStats_stat cardStats_stat-comments'>54 <i class='far fa-comment fa-fw'></i></span>
+        <span class='cardStats_stat cardStats_stat-shares'>410 <i class='far fa-share fa-fw'></i></span>
+        </span>
+    </div>
+  </div>
+
+  <div class='card'>
+    <header class='cardHeader'>
+      <i class='fab fa-twitter cardHeader_type'></i>
+      <span class='cardHeader_account'>@hongkongfp</span>
+      <span class='cardHeader_date'>Jul 6 11:26</span>
+    </header>
+    <div class='cardBody'>
+      <p class='cardText'>Hong Kong gov't tells schools to remove books breaching security law
+        <span class='cardText_highlight'>https://t.co/JbyrMwxexU</span></p>
+      <section class='cardStats'>
+        <span class='cardStats_stat cardStats_stat-likes'>96 <i class='far fa-heart fa-fw'></i></span>
+        <span class='cardStats_stat cardStats_stat-retweets'>110 <i class='far fa-retweet fa-fw'></i></span>
+        </span>
+    </div>
+  </div>
+</div>
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 125" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+  <g>
+    <path d="M40.6,66.2c-0.8-9.4,4.5-19.1,12.9-23.5c0.5-0.2,1-0.5,1.5-0.5c1.1-0.1,2.2,0.6,2.8,1.5c0.6,0.9,0.8,2.1,0.9,3.2   c0.7,8.4-4.2,17-11.7,20.7c-1.1,0.6-2.4,1-3.7,0.9C42,68.5,40.7,67.5,40.6,66.2 M55.6,46.9c-0.1-0.7-0.2-1.5-0.9-1.9   c-5.4,2.8-9.5,8-11.1,13.9c-0.4,1.5-0.6,3.2,0.3,4.5c1.5-3.2,3.3-6.2,5.4-9c0.5-0.7,1.6-1.4,2.1-0.7c0.2,0.4,0.1,0.9-0.1,1.3   c-1.3,3-3,5.9-4.9,8.5c-0.5,0.7-1,1.6-0.4,2.2C52.5,61.9,56.3,54.3,55.6,46.9z" />
+    <path d="M36.7,62.5c-0.2,0.8-0.5,1.7-1.1,2.4c-0.6,0.6-1.7,0.8-2.4,0.2c-1.5-1.6-3.9-1.7-5.9-2.4c-2.9-1-5.3-3.3-6.9-5.9   c-1.6-2.6-2.6-5.6-3.4-8.6c-0.3-0.9-0.5-1.9-0.5-2.9c0.1-1,0.6-2,1.5-2.4c0.5-0.2,1.1-0.2,1.6-0.2c5,0.1,10,2,13.8,5.2   c1.4,1.2,2.7,2.6,3.4,4.3C38.4,55.4,37.6,59.1,36.7,62.5 M33.6,52.7c-2.8-4.1-7.4-6.8-12.4-7.2c-0.3,0-0.7,0-1,0.2   c-0.2,0.2-0.2,0.4-0.2,0.7c-0.2,3.2,1.3,6.3,3.4,8.8c2.1,2.4,4.9,4.2,7.7,5.6c0.4,0.2,1.1,0.4,1.3-0.1c0.1-0.2,0-0.5-0.2-0.7   c-1.2-2.2-2.4-4.4-3.6-6.7c-0.3-0.5,0.3-1.2,0.9-1.2c0.6,0,1.1,0.4,1.5,0.8c1.6,1.5,2.7,3.4,3.2,5.5C35.5,56.8,34.7,54.4,33.6,52.7   z" />
+    <path d="M66,77.6c-3.4,3.1-8.3,3.9-12.9,3.6c-0.7-0.1-1.5-0.2-1.9-0.8c-0.3-0.4-0.3-1-0.3-1.5c0.2-5.4,3.1-10.4,7-14.1   c3.9-3.7,8.7-6.3,13.6-8.6c0.8-0.4,2.1-0.5,2.3,0.3c0,0.2,0,0.4-0.1,0.6c-0.7,3-1.5,6-2.2,8.9C70.3,70.3,69.1,74.7,66,77.6    M60.1,73.5c-1.5,1.7-3,3.3-4.4,5c2.8,0.4,5.8-0.5,8-2.4c4.1-3.7,4.2-10,6.2-15.1c-0.3-0.6-1.2-0.4-1.8-0.2   c-5.9,2.5-10.7,7.2-13.5,13c-0.4,0.8-0.6,2.2,0.3,2.5c0.7-1.2,1.7-2.2,2.8-3.1c0.4-0.3,0.9-0.6,1.4-0.6   C59.6,72.6,60.2,73,60.1,73.5z" />
+    <path d="M84.2,40.9c0,0.5-0.3,1-0.5,1.4c-4.1,6.7-11.2,12-19.1,11.9c-0.8,0-1.5-0.1-2.2-0.5c-0.6-0.4-1-1.3-0.6-2   c3.8-6.7,10.7-11.6,18.3-12.8c0.9-0.1,1.8-0.2,2.6,0C83.5,39.2,84.3,40,84.2,40.9 M79.3,42.5c-2.9,0.3-5.8,1.3-8.2,2.9   c-2,1.3-3.6,3-5.3,4.7c-0.1,0.1-0.3,0.3-0.3,0.4c0,0.4,0.6,0.5,1,0.5c4.9-0.7,9.4-3.3,12.5-7.2C79.4,43.5,79.7,42.8,79.3,42.5z" />
+    <path d="M37.6,43.6c-0.5,0.7-1.6,0.4-2.3,0c-3.9-2.1-7.7-4.7-10.5-8.2s-4.9-7.7-5.1-12.2c0-0.4,0-0.8,0.2-1.1c0.5-1,2-0.6,3-0.1   c7.6,4.1,13.2,11.7,14.9,20.1C37.8,42.6,37.9,43.2,37.6,43.6 M22.6,26.5c2.2,5.5,6,10.3,10.9,13.5c0.3,0.2,0.8,0.3,0.8,0   c0-0.1,0-0.2-0.1-0.3C32,33.8,28.1,28.6,23,24.9C22.4,24.9,22.4,25.9,22.6,26.5z" />
+    <path d="M7,61c1.5-2.3,4.9-2.2,7.4-1.1c5,2.3,8.2,8,7.5,13.5c0,0.2-0.1,0.5-0.2,0.7c-0.4,0.4-1.2,0-1.6-0.4   c-1.7-1.7-3.1-3.8-5.3-4.8c-1.7-0.7-3.6-0.7-5.2-1.5C7.1,66.3,5.6,63.2,7,61 M18.5,67.8c-1.4-3-4.2-5.3-7.5-6   c-0.6-0.1-1.4-0.2-1.8,0.3c-0.5,0.5-0.4,1.5,0.1,2c0.5,0.6,1.2,0.8,1.9,1.1C13.6,66,16,66.9,18.5,67.8z" />
+    <path d="M63.1,37.3c0.6-1.5,2.5-2.4,4-1.8c1.5,0.6,2.4,2.4,1.9,4c-0.5,1.5-2.4,2.5-3.9,2C63.4,40.9,62.4,38.9,63.1,37.3 M65.2,38.1   c0,0.6,0.4,1.2,0.9,1.5c0.4-0.4,0.7-1,0.4-1.5C66.3,37.6,65.4,37.6,65.2,38.1L65.2,38.1z" />
+    <path d="M45.1,18.8c1.3-0.2,2.2,1.3,2.6,2.6c2.1,6.8,2.4,14.4-0.8,20.7c-0.5,1-1.4,2.1-2.5,1.9c-0.7-0.1-1.2-0.8-1.6-1.5   c-3.5-6.5-2.5-14.7,0.3-21.6C43.6,20,44.1,19,45.1,18.8 M45.4,40.6c0.1-0.1,0.2-0.3,0.2-0.4c1.6-5.5,1.6-11.4,0.1-17   c-0.1-0.3-0.4-0.7-0.7-0.6c-0.1,0.1-0.2,0.2-0.2,0.3c-2,5.3-2.2,11.3-0.7,16.8C44.3,40.3,44.9,41,45.4,40.6z" />
+    <path d="M95,70.2c0.8,1.7-0.4,4-2.2,4.4c-1.9,0.4-3.9-1.3-3.8-3.2c0-1.4,1.1-2.7,2.5-3C92.9,68.1,94.4,68.9,95,70.2 M91.4,70.5   c-0.7,0.7,0.1,2.2,1.1,2C92.8,71.8,92.3,70.8,91.4,70.5L91.4,70.5z" />
+    <path d="M86.8,53c1.9,0.9,2.7,3.4,2.3,5.5c-0.4,2.1-1.5,4-2.5,5.9c-2.1,3.9-3.6,8.1-4.5,12.4c-3.6-5.2-4.7-12.1-2.9-18.2   c0.5-1.7,1.3-3.4,2.6-4.6C83.2,52.8,85.2,52.2,86.8,53 M83.7,55.7c-3.1,3.1-3.1,8-2.9,12.4c0,0.4,0.3,1,0.6,0.8   c0.1-0.1,0.1-0.2,0.2-0.2c1.6-2.8,3-5.7,4.2-8.6c0.4-1,0.9-2.2,0.5-3.3S84.5,54.9,83.7,55.7z" />
+    <path d="M31.9,70c0.8,1.8-0.4,4.1-2.3,4.5c-1.9,0.4-4-1.3-3.9-3.3c0-1.4,1.2-2.8,2.6-3.1C29.7,67.9,31.3,68.7,31.9,70 M28.3,70.4   c-0.7,0.8,0.1,2.2,1.1,2.1C29.6,71.6,29.1,70.6,28.3,70.4L28.3,70.4z" />
+  </g>
+</svg>]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</application>
+        <file_path/>
+        <instance_id>f1495998dbfa445452dd2f17d49619a7</instance_id>
+        <instance_name>dev98914</instance_name>
+        <name>sp_widget_280e62a50711011095c1f4be7c1ed0ad</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;custom&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css&gt;$dark-blue: #26293C&amp;#13;
+$light-green: #B2D9A6&amp;#13;
+$yellow: #FFD433&amp;#13;
+$gray: #c0c3d7&amp;#13;
+$light-blue: #C6E1ED&amp;#13;
+$light-pink: #FFD3D4&amp;#13;
+$orange: #FF582C&amp;#13;
+$light-orange: lighten($orange, 15%)&amp;#13;
+$purple: #782C4A&amp;#13;
+$light-purple: lighten($purple, 35%)&amp;#13;
+$red: #c0392b&amp;#13;
+$pale-red: rgba($red, .6)&amp;#13;
+&amp;#13;
+body&amp;#13;
+  background-color: darken($dark-blue, 5%)&amp;#13;
+  font-family: Nunito, sans-serif&amp;#13;
+  overflow-x: hidden&amp;#13;
+  @media (max-width: 705px)&amp;#13;
+    font-size: .8em&amp;#13;
+&amp;#13;
+.deck&amp;#13;
+  position: relative&amp;#13;
+  max-width: 500px&amp;#13;
+  width: 100%&amp;#13;
+  margin: 5em auto 3em&amp;#13;
+  @media (max-width: 705px)&amp;#13;
+    margin: 4em auto&amp;#13;
+  &amp;amp;:before&amp;#13;
+    content: ''&amp;#13;
+    position: absolute&amp;#13;
+    width: 120%&amp;#13;
+    height: 95%&amp;#13;
+    top: -1.5em&amp;#13;
+    left: 0em&amp;#13;
+    border-radius: 8px&amp;#13;
+    background: linear-gradient(109.61deg,lighten($dark-blue, 3%) 4.26%,darken($dark-blue, 3%) 84.84%)&amp;#13;
+    @media (max-width: 550px)&amp;#13;
+      left: 1.5em&amp;#13;
+.card&amp;#13;
+  position: relative&amp;#13;
+  background-color: lighten($dark-blue, 5%)&amp;#13;
+  padding: 1em&amp;#13;
+  z-index: 5&amp;#13;
+  border-radius: 2px&amp;#13;
+  box-shadow: 4px 4px 20px rgba(0,0,0,.3)&amp;#13;
+  transition: 200ms ease-in-out&amp;#13;
+  + .card&amp;#13;
+    margin-top: 1em&amp;#13;
+  &amp;amp;:hover&amp;#13;
+    z-index: 7&amp;#13;
+    transform: scale(1.05)&amp;#13;
+    box-shadow: 0 4px 25px rgba(0,0,0,.4)&amp;#13;
+  &amp;amp;:first-of-type&amp;#13;
+    margin-left: -3em&amp;#13;
+    margin-right: 3em&amp;#13;
+    @media (max-width: 705px)&amp;#13;
+      margin-left: -1em&amp;#13;
+      margin-right: 1em&amp;#13;
+    @media (max-width: 550px)&amp;#13;
+      margin: 0&amp;#13;
+  &amp;amp;:nth-of-type(2)&amp;#13;
+    margin-left: 5em&amp;#13;
+    margin-right: -5em&amp;#13;
+    margin-top: -6em&amp;#13;
+    @media (max-width: 705px)&amp;#13;
+      margin-left: 1em&amp;#13;
+      margin-right: -1em&amp;#13;
+      margin-top: 1em&amp;#13;
+    @media (max-width: 550px)&amp;#13;
+      margin: 1em 0 0&amp;#13;
+  &amp;amp;:nth-of-type(3)&amp;#13;
+    margin-top: -2em&amp;#13;
+    margin-left: -1em&amp;#13;
+    margin-right: 1em&amp;#13;
+    @media (max-width: 705px)&amp;#13;
+      margin-left: -1em&amp;#13;
+      margin-right: 1em&amp;#13;
+      margin-top: 1em&amp;#13;
+      &amp;amp;:after&amp;#13;
+        content: ''&amp;#13;
+        position: absolute&amp;#13;
+        left: 0&amp;#13;
+        right: 0&amp;#13;
+        bottom: -1em&amp;#13;
+        display: block&amp;#13;
+        border-bottom: 5px solid $pale-red&amp;#13;
+    @media (max-width: 550px)&amp;#13;
+      margin: 1em 0 0&amp;#13;
+.cardHeader&amp;#13;
+  display: grid&amp;#13;
+  grid-template-columns: 36px auto 100px&amp;#13;
+  align-items: center&amp;#13;
+  text-transform: uppercase&amp;#13;
+  .cardHeader_type&amp;#13;
+    color: $yellow&amp;#13;
+    margin: 10px&amp;#13;
+  .cardHeader_account&amp;#13;
+    color: $light-blue&amp;#13;
+    font-size: .85em&amp;#13;
+    font-weight: 600&amp;#13;
+    letter-spacing: 1px&amp;#13;
+  .cardHeader_date&amp;#13;
+    margin: 10px&amp;#13;
+    color: $light-blue&amp;#13;
+    font-size: .85em&amp;#13;
+    font-weight: 600&amp;#13;
+    text-align: right&amp;#13;
+.cardBody&amp;#13;
+  display: flex&amp;#13;
+  margin: 0 10px 10px&amp;#13;
+  .cardText&amp;#13;
+    margin: 0 10px 0 0&amp;#13;
+    white-space: pre-line&amp;#13;
+    color: $gray&amp;#13;
+    font-weight: 400&amp;#13;
+    line-height: 1.5&amp;#13;
+    .cardText_highlight&amp;#13;
+      color: lighten($yellow, 15%)&amp;#13;
+  .cardStats&amp;#13;
+    font-size: .9em&amp;#13;
+    text-align: right&amp;#13;
+    .cardStats_stat&amp;#13;
+      display: inline-block&amp;#13;
+      white-space: nowrap&amp;#13;
+      + .cardStats_stat&amp;#13;
+        margin-top: 5px&amp;#13;
+      &amp;amp;.cardStats_stat-likes&amp;#13;
+        color: $light-pink&amp;#13;
+      &amp;amp;.cardStats_stat-retweets&amp;#13;
+        color: $light-green&amp;#13;
+      &amp;amp;.cardStats_stat-shares&amp;#13;
+        color: $light-purple&amp;#13;
+      &amp;amp;.cardStats_stat-comments&amp;#13;
+        color: $light-orange&amp;#13;
+&amp;#13;
+svg&amp;#13;
+  position: absolute&amp;#13;
+  top: 0&amp;#13;
+  max-width: 90vw&amp;#13;
+  min-width: 500px&amp;#13;
+  max-height: 100vh&amp;#13;
+  min-height: 725px&amp;#13;
+  fill: $pale-red&amp;#13;
+  @media (max-width: 705px)&amp;#13;
+    display: none&amp;#13;
+  path:nth-of-type(1)&amp;#13;
+    transform: scale(.3) translateY(250px) translateX(15px)&amp;#13;
+  path:nth-of-type(2)&amp;#13;
+    transform: scale(.3) translateY(230px) translateX(10px)&amp;#13;
+  path:nth-of-type(3)&amp;#13;
+    transform: scale(.3) translateX(256px) translateY(39px)&amp;#13;
+  path:nth-of-type(4)&amp;#13;
+    transform: scale(.3) translateY(175px)&amp;#13;
+  path:nth-of-type(5)&amp;#13;
+    transform: scale(.3) translateX(267px) translateY(50px)&amp;#13;
+  path:nth-of-type(6)&amp;#13;
+    transform: scale(.3) translateY(170px) translateX(10px)&amp;#13;
+  path:nth-of-type(7)&amp;#13;
+    transform: scale(.3) translateY(150px)&amp;#13;
+  path:nth-of-type(8)&amp;#13;
+    transform: scale(.3) translateY(150px)&amp;#13;
+  path:nth-of-type(9)&amp;#13;
+    transform: scale(.3) translateX(230px) translateY(-34px)&amp;#13;
+  path:nth-of-type(10)&amp;#13;
+    transform: scale(.3) translateX(354px) translateY(-35px) rotateY(180deg) rotate(25deg)&amp;#13;
+  path:nth-of-type(11)&amp;#13;
+    transform: scale(.3) translateY(85px) translateX(-15px)&amp;#13;
+  &lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list/&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id&gt;card-stacked&lt;/id&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]&gt;&lt;/link&gt;&lt;name&gt;Card-Stacked&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;false&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+
+})();]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-01-27 03:33:43&lt;/sys_created_on&gt;&lt;sys_id&gt;280e62a50711011095c1f4be7c1ed0ad&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;Card-Stacked&lt;/sys_name&gt;&lt;sys_package display_value="Portal Util" source="x_26525_portal"&gt;52e536ea0700011095c1f4be7c1ed096&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Portal Util"&gt;52e536ea0700011095c1f4be7c1ed096&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_280e62a50711011095c1f4be7c1ed0ad&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-01-27 03:33:43&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div class='deck'&gt;
+  &lt;div class='card'&gt;
+    &lt;header class='cardHeader'&gt;
+      &lt;i class='fab fa-instagram cardHeader_type'&gt;&lt;/i&gt;
+      &lt;span class='cardHeader_account'&gt;@hongkongfp&lt;/span&gt;
+      &lt;span class='cardHeader_date'&gt;Jul 1 6:03&lt;/span&gt;
+    &lt;/header&gt;
+    &lt;div class='cardBody'&gt;
+      &lt;p class='cardText'&gt;On Tuesday, China's National People's Congress Standing Committee unanimously passed a controversial national security law for Hong Kong. The law, which criminalises acts of secession, subversion, foreign interference and terrorism, was promulgated and gazetted on the same day with immediate effect. Details were only revealed late at night as it was directly inserted into the Annex III of the semi-autonomous region's mini-constitution, bypassing the local legislature.
+        &lt;span class='cardText_highlight'&gt;#hongkong&lt;/span&gt; &lt;span class='cardText_highlight'&gt;#china&lt;/span&gt; &lt;span class='cardText_highlight'&gt;#humanrights&lt;/span&gt; &lt;span class='cardText_highlight'&gt;#hk&lt;/span&gt;&lt;/p&gt;
+      &lt;section class='cardStats'&gt;
+        &lt;span class='cardStats_stat cardStats_stat-likes'&gt;2155 &lt;i class='far fa-heart fa-fw'&gt;&lt;/i&gt;&lt;/span&gt;
+        &lt;span class='cardStats_stat cardStats_stat-comments'&gt;87 &lt;i class='far fa-comment fa-fw'&gt;&lt;/i&gt;&lt;/span&gt;
+        &lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class='card'&gt;
+    &lt;header class='cardHeader'&gt;
+      &lt;i class='fab fa-facebook-f cardHeader_type'&gt;&lt;/i&gt;
+      &lt;span class='cardHeader_account'&gt;@hongkongfp&lt;/span&gt;
+      &lt;span class='cardHeader_date'&gt;Jul 2 11:49&lt;/span&gt;
+    &lt;/header&gt;
+    &lt;div class='cardBody'&gt;
+      &lt;p class='cardText'&gt;"Liberate Hong Kong; revolution of our times," is pro-independence, secessionist or subversive, and thus criminalised under the newly-enacted national security law, the government says.
+        Law scholar Benny Tai said: "The reality is, under the Hong Kong national security law, every sentence said by every person at every moment could touch the red line and be said as violating the law. How could the national security law only targets a small group of people."&lt;/p&gt;
+      &lt;section class='cardStats'&gt;
+        &lt;span class='cardStats_stat cardStats_stat-likes'&gt;857 &lt;i class='far fa-heart fa-fw'&gt;&lt;/i&gt;&lt;/span&gt;
+        &lt;span class='cardStats_stat cardStats_stat-comments'&gt;54 &lt;i class='far fa-comment fa-fw'&gt;&lt;/i&gt;&lt;/span&gt;
+        &lt;span class='cardStats_stat cardStats_stat-shares'&gt;410 &lt;i class='far fa-share fa-fw'&gt;&lt;/i&gt;&lt;/span&gt;
+        &lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class='card'&gt;
+    &lt;header class='cardHeader'&gt;
+      &lt;i class='fab fa-twitter cardHeader_type'&gt;&lt;/i&gt;
+      &lt;span class='cardHeader_account'&gt;@hongkongfp&lt;/span&gt;
+      &lt;span class='cardHeader_date'&gt;Jul 6 11:26&lt;/span&gt;
+    &lt;/header&gt;
+    &lt;div class='cardBody'&gt;
+      &lt;p class='cardText'&gt;Hong Kong gov't tells schools to remove books breaching security law
+        &lt;span class='cardText_highlight'&gt;https://t.co/JbyrMwxexU&lt;/span&gt;&lt;/p&gt;
+      &lt;section class='cardStats'&gt;
+        &lt;span class='cardStats_stat cardStats_stat-likes'&gt;96 &lt;i class='far fa-heart fa-fw'&gt;&lt;/i&gt;&lt;/span&gt;
+        &lt;span class='cardStats_stat cardStats_stat-retweets'&gt;110 &lt;i class='far fa-retweet fa-fw'&gt;&lt;/i&gt;&lt;/span&gt;
+        &lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 125" style="enable-background:new 0 0 100 100;" xml:space="preserve"&gt;
+  &lt;g&gt;
+    &lt;path d="M40.6,66.2c-0.8-9.4,4.5-19.1,12.9-23.5c0.5-0.2,1-0.5,1.5-0.5c1.1-0.1,2.2,0.6,2.8,1.5c0.6,0.9,0.8,2.1,0.9,3.2   c0.7,8.4-4.2,17-11.7,20.7c-1.1,0.6-2.4,1-3.7,0.9C42,68.5,40.7,67.5,40.6,66.2 M55.6,46.9c-0.1-0.7-0.2-1.5-0.9-1.9   c-5.4,2.8-9.5,8-11.1,13.9c-0.4,1.5-0.6,3.2,0.3,4.5c1.5-3.2,3.3-6.2,5.4-9c0.5-0.7,1.6-1.4,2.1-0.7c0.2,0.4,0.1,0.9-0.1,1.3   c-1.3,3-3,5.9-4.9,8.5c-0.5,0.7-1,1.6-0.4,2.2C52.5,61.9,56.3,54.3,55.6,46.9z" /&gt;
+    &lt;path d="M36.7,62.5c-0.2,0.8-0.5,1.7-1.1,2.4c-0.6,0.6-1.7,0.8-2.4,0.2c-1.5-1.6-3.9-1.7-5.9-2.4c-2.9-1-5.3-3.3-6.9-5.9   c-1.6-2.6-2.6-5.6-3.4-8.6c-0.3-0.9-0.5-1.9-0.5-2.9c0.1-1,0.6-2,1.5-2.4c0.5-0.2,1.1-0.2,1.6-0.2c5,0.1,10,2,13.8,5.2   c1.4,1.2,2.7,2.6,3.4,4.3C38.4,55.4,37.6,59.1,36.7,62.5 M33.6,52.7c-2.8-4.1-7.4-6.8-12.4-7.2c-0.3,0-0.7,0-1,0.2   c-0.2,0.2-0.2,0.4-0.2,0.7c-0.2,3.2,1.3,6.3,3.4,8.8c2.1,2.4,4.9,4.2,7.7,5.6c0.4,0.2,1.1,0.4,1.3-0.1c0.1-0.2,0-0.5-0.2-0.7   c-1.2-2.2-2.4-4.4-3.6-6.7c-0.3-0.5,0.3-1.2,0.9-1.2c0.6,0,1.1,0.4,1.5,0.8c1.6,1.5,2.7,3.4,3.2,5.5C35.5,56.8,34.7,54.4,33.6,52.7   z" /&gt;
+    &lt;path d="M66,77.6c-3.4,3.1-8.3,3.9-12.9,3.6c-0.7-0.1-1.5-0.2-1.9-0.8c-0.3-0.4-0.3-1-0.3-1.5c0.2-5.4,3.1-10.4,7-14.1   c3.9-3.7,8.7-6.3,13.6-8.6c0.8-0.4,2.1-0.5,2.3,0.3c0,0.2,0,0.4-0.1,0.6c-0.7,3-1.5,6-2.2,8.9C70.3,70.3,69.1,74.7,66,77.6    M60.1,73.5c-1.5,1.7-3,3.3-4.4,5c2.8,0.4,5.8-0.5,8-2.4c4.1-3.7,4.2-10,6.2-15.1c-0.3-0.6-1.2-0.4-1.8-0.2   c-5.9,2.5-10.7,7.2-13.5,13c-0.4,0.8-0.6,2.2,0.3,2.5c0.7-1.2,1.7-2.2,2.8-3.1c0.4-0.3,0.9-0.6,1.4-0.6   C59.6,72.6,60.2,73,60.1,73.5z" /&gt;
+    &lt;path d="M84.2,40.9c0,0.5-0.3,1-0.5,1.4c-4.1,6.7-11.2,12-19.1,11.9c-0.8,0-1.5-0.1-2.2-0.5c-0.6-0.4-1-1.3-0.6-2   c3.8-6.7,10.7-11.6,18.3-12.8c0.9-0.1,1.8-0.2,2.6,0C83.5,39.2,84.3,40,84.2,40.9 M79.3,42.5c-2.9,0.3-5.8,1.3-8.2,2.9   c-2,1.3-3.6,3-5.3,4.7c-0.1,0.1-0.3,0.3-0.3,0.4c0,0.4,0.6,0.5,1,0.5c4.9-0.7,9.4-3.3,12.5-7.2C79.4,43.5,79.7,42.8,79.3,42.5z" /&gt;
+    &lt;path d="M37.6,43.6c-0.5,0.7-1.6,0.4-2.3,0c-3.9-2.1-7.7-4.7-10.5-8.2s-4.9-7.7-5.1-12.2c0-0.4,0-0.8,0.2-1.1c0.5-1,2-0.6,3-0.1   c7.6,4.1,13.2,11.7,14.9,20.1C37.8,42.6,37.9,43.2,37.6,43.6 M22.6,26.5c2.2,5.5,6,10.3,10.9,13.5c0.3,0.2,0.8,0.3,0.8,0   c0-0.1,0-0.2-0.1-0.3C32,33.8,28.1,28.6,23,24.9C22.4,24.9,22.4,25.9,22.6,26.5z" /&gt;
+    &lt;path d="M7,61c1.5-2.3,4.9-2.2,7.4-1.1c5,2.3,8.2,8,7.5,13.5c0,0.2-0.1,0.5-0.2,0.7c-0.4,0.4-1.2,0-1.6-0.4   c-1.7-1.7-3.1-3.8-5.3-4.8c-1.7-0.7-3.6-0.7-5.2-1.5C7.1,66.3,5.6,63.2,7,61 M18.5,67.8c-1.4-3-4.2-5.3-7.5-6   c-0.6-0.1-1.4-0.2-1.8,0.3c-0.5,0.5-0.4,1.5,0.1,2c0.5,0.6,1.2,0.8,1.9,1.1C13.6,66,16,66.9,18.5,67.8z" /&gt;
+    &lt;path d="M63.1,37.3c0.6-1.5,2.5-2.4,4-1.8c1.5,0.6,2.4,2.4,1.9,4c-0.5,1.5-2.4,2.5-3.9,2C63.4,40.9,62.4,38.9,63.1,37.3 M65.2,38.1   c0,0.6,0.4,1.2,0.9,1.5c0.4-0.4,0.7-1,0.4-1.5C66.3,37.6,65.4,37.6,65.2,38.1L65.2,38.1z" /&gt;
+    &lt;path d="M45.1,18.8c1.3-0.2,2.2,1.3,2.6,2.6c2.1,6.8,2.4,14.4-0.8,20.7c-0.5,1-1.4,2.1-2.5,1.9c-0.7-0.1-1.2-0.8-1.6-1.5   c-3.5-6.5-2.5-14.7,0.3-21.6C43.6,20,44.1,19,45.1,18.8 M45.4,40.6c0.1-0.1,0.2-0.3,0.2-0.4c1.6-5.5,1.6-11.4,0.1-17   c-0.1-0.3-0.4-0.7-0.7-0.6c-0.1,0.1-0.2,0.2-0.2,0.3c-2,5.3-2.2,11.3-0.7,16.8C44.3,40.3,44.9,41,45.4,40.6z" /&gt;
+    &lt;path d="M95,70.2c0.8,1.7-0.4,4-2.2,4.4c-1.9,0.4-3.9-1.3-3.8-3.2c0-1.4,1.1-2.7,2.5-3C92.9,68.1,94.4,68.9,95,70.2 M91.4,70.5   c-0.7,0.7,0.1,2.2,1.1,2C92.8,71.8,92.3,70.8,91.4,70.5L91.4,70.5z" /&gt;
+    &lt;path d="M86.8,53c1.9,0.9,2.7,3.4,2.3,5.5c-0.4,2.1-1.5,4-2.5,5.9c-2.1,3.9-3.6,8.1-4.5,12.4c-3.6-5.2-4.7-12.1-2.9-18.2   c0.5-1.7,1.3-3.4,2.6-4.6C83.2,52.8,85.2,52.2,86.8,53 M83.7,55.7c-3.1,3.1-3.1,8-2.9,12.4c0,0.4,0.3,1,0.6,0.8   c0.1-0.1,0.1-0.2,0.2-0.2c1.6-2.8,3-5.7,4.2-8.6c0.4-1,0.9-2.2,0.5-3.3S84.5,54.9,83.7,55.7z" /&gt;
+    &lt;path d="M31.9,70c0.8,1.8-0.4,4.1-2.3,4.5c-1.9,0.4-4-1.3-3.9-3.3c0-1.4,1.2-2.8,2.6-3.1C29.7,67.9,31.3,68.7,31.9,70 M28.3,70.4   c-0.7,0.8,0.1,2.2,1.1,2.1C29.6,71.6,29.1,70.6,28.3,70.4L28.3,70.4z" /&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-285127839</payload_hash>
+        <record_name>Card-Stacked</record_name>
+        <reverted_from/>
+        <source>10963eea0700011095c1f4be7c1ed047</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-01-27 03:33:43</sys_created_on>
+        <sys_id>e73e6ae50711011095c1f4be7c1ed05d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>17e99989ead0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-01-27 03:33:43</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>233e6ae56a110110c4c88ae6ce041a5d</update_guid>
+        <update_guid_history>233e6ae56a110110c4c88ae6ce041a5d:-285127839</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Card-Stacked">307fea290711011095c1f4be7c1ed076</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-01-27 03:38:59</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>45e2dc9dd7c64880a04c1080d1761000</sys_id>
+        <sys_metadata>280e62a50711011095c1f4be7c1ed0ad</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Card-Stacked</sys_name>
+        <sys_package display_value="Portal Util" source="x_26525_portal">52e536ea0700011095c1f4be7c1ed096</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</sys_scope>
+        <sys_scope_delete display_value="">05589f24cf214a6080aa6db6bca66e90</sys_scope_delete>
+        <sys_update_name>sp_widget_280e62a50711011095c1f4be7c1ed0ad</sys_update_name>
+        <sys_update_version display_value="sp_widget_280e62a50711011095c1f4be7c1ed0ad">e73e6ae50711011095c1f4be7c1ed05d</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-01-27 03:38:59</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
-    <element label="Kudoboard" max_length="40" name="x_26525_portal_kudoboard" type="collection">
+    <element label="Kudoboard" max_length="40" name="x_26525_portal_kudoboard" sizeclass="1" type="collection">
         <element attributes="encode_utf8=false" label="Author" max_length="32" name="author" reference="sys_user" type="reference"/>
         <element attributes="no_sort=true,slushbucket_ref_no_expand=true" label="Contributor" max_length="1024" name="contributor" reference="sys_user" type="glide_list"/>
         <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" read_only="true" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Short Description" max_length="40" name="short_description" type="string"/>
         <element attributes="encode_utf8=false" label="User" max_length="32" name="user" reference="sys_user" type="reference"/>
         <index name="index">
             <element name="author"/>

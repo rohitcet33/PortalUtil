@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function($scope,spModal,$uibModal,spUtil) {
+  /* widget controller */
+	$scope.pop_title="";
+  var c = this;
+	$scope.react = function(id,title){
+		$scope.pop_title=title;
+		var parameter={
+			sys_id: id,
+			table: 'x_26525_portal_kudos',
+		  includeExtended: true,
+			hideAttachmentBtn: true,
+			title: "${Comments}",
+			use_dynamic_placeholder: true,
+			btnLabel: "${Post}"
+		}
+		spUtil.get("widget-ticket-conversation",parameter).then(function(response) {
+            c.myClockWidget = response;
+    });
+		$uibModal.open({
+			templateUrl: 'CommentsModal',
+			scope: $scope
+		});
+	}
+	c.closeModal = function (){
+		alert('ok');
+	}
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>@import url("https://fonts.googleapis.com/css2?family=Roboto&amp;display=swap");
+* {
+  box-sizing: border-box;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  background-color: #f7f8fc;
+  font-family: "Roboto", sans-serif;
+  color: #10182f;
+}
+.container {
+  display: flex;
+  width: 1040px;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+.card {
+  margin: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden; 
+  width: 300px;
+}
+.card-header img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  min-height: 250px;
+}
+
+.tag {
+  background: #cccccc;
+  border-radius: 50px;
+  font-size: 12px;
+  margin: 0;
+  color: #fff;
+  padding: 2px 10px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.tag-teal {
+  background-color: #47bcd4;
+}
+.tag-purple {
+  background-color: #5e76bf;
+}
+.tag-pink {
+  background-color: #cd5b9f;
+}
+
+.card-body p {
+  font-size: 13px;
+  margin: 0 0 40px;
+}
+.user {
+  display: flex;
+  margin-top: auto;
+}
+
+.user img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+.user-info h5 {
+  margin: 0;
+}
+.user-info small {
+  color: #545d7a;
+}
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id/>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Kudoboard</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+	var gr = new GlideRecord('x_26525_portal_kudoboard');
+	gr.addEncodedQuery('sys_id=e2ed69550751011095c1f4be7c1ed00e');
+	gr.query();
+	if(gr.next()){
+		var obj={};
+		obj.number= gr.getDisplayValue('number');
+		obj.user=gr.getValue('user');
+		obj.author = gr.getValue('author');
+		obj.user_display = gr.getDisplayValue('user');
+		obj.author_display= gr.getDisplayValue('author');
+		obj.short_description = gr.getValue('short_description');
+		var kdo=[];
+		var kudo = new GlideRecord('x_26525_portal_kudos');
+		kudo.addEncodedQuery('kudoboard='+gr.sys_id+'^active=true');
+		kudo.query();
+		while(kudo.next()){
+			var objkudo={};
+			objkudo.number = kudo.getValue('number');
+			objkudo.title = kudo.getValue('title');
+			objkudo.message = kudo.getValue('message');
+			objkudo.user = kudo.getValue('user');
+			objkudo.user_display = kudo.getDisplayValue('user');
+			objkudo.user_image=liveProfile(kudo.getValue('user'));
+			objkudo.sys_created_on=kudo.getValue('sys_created_on');
+			objkudo.sys_id = kudo.getValue('sys_id');
+			objkudo.comments_count=kudo.getValue('comments_count') || 0;
+			kdo.push(objkudo);
+		}
+		obj.kudos=kdo;
+		data.rec=obj;
+	}
+	function liveProfile(user_sys_id){
+		var live = new GlideRecord('live_profile');
+		live.addEncodedQuery('document='+user_sys_id);
+		live.query();
+		if(live.next()){
+			var gra = new GlideRecord('sys_attachment');
+			gra.addEncodedQuery('table_sys_id='+live.sys_id);
+			gra.query();
+			if(gra.next()){
+				return gra.getValue('sys_id')+'.iix';
+			}
+			return 'a63421183740310042106710ce41f16a.iix';
+		}
+		return 'a63421183740310042106710ce41f16a.iix';
+	}
+	
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-01-27 03:40:53</sys_created_on>
+        <sys_id>53cf6e290711011095c1f4be7c1ed012</sys_id>
+        <sys_mod_count>137</sys_mod_count>
+        <sys_name>Kudoboard</sys_name>
+        <sys_package display_value="Portal Util" source="x_26525_portal">52e536ea0700011095c1f4be7c1ed096</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</sys_scope>
+        <sys_update_name>sp_widget_53cf6e290711011095c1f4be7c1ed012</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-01-31 05:20:58</sys_updated_on>
+        <template><![CDATA[<div>
+<!-- your widget template -->
+  <i style="font-size:24px" class="fa" style="position: absolute; margin-left: 95%;font-size: 30px;">&#xf067;</i>
+  <h3 style="text-align: center;">Wellcome to Kudoboard</h3>
+  <p style="margin-left: 5%;">Hi {{data.rec.user_display}} {{data.rec.short_description}}</p>
+  <!-- {{data.rec}} -->
+  
+  <div class="card-main-body">
+    <div class="row">
+      <div ng-repeat="x in data.rec.kudos" class="col-sm-3 col-md-3">
+          <!-- <widget id="card-article"></widget> -->
+        <div ng-include="'Card-Article'" ></div>
+    </div>
+    </div>
+  </div>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

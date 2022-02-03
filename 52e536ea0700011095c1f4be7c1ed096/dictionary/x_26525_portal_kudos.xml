@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
-    <element label="Kudos" max_length="40" name="x_26525_portal_kudos" type="collection">
+    <element audit="true" label="Kudos" max_length="40" name="x_26525_portal_kudos" sizeclass="5" type="collection">
         <element label="Active" max_length="40" name="active" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Comments" max_length="40" name="comments" type="journal_input"/>
+        <element default="0" label="Comments Count" max_length="40" name="comments_count" read_only="true" type="integer"/>
         <element attributes="encode_utf8=false" label="Kudoboard" max_length="32" name="kudoboard" reference="x_26525_portal_kudoboard" type="reference"/>
         <element label="Message" max_length="65536" name="message" type="html"/>
         <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="Title" max_length="100" name="title" type="string"/>
+        <element attributes="encode_utf8=false" label="User" max_length="32" name="user" reference="sys_user" type="reference"/>
         <index name="index">
             <element name="kudoboard"/>
+        </index>
+        <index name="index2">
+            <element name="user"/>
         </index>
     </element>
 </database>

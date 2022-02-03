@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function($scope) {
+  /* widget controller */
+  var c = this;
+	/*
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+} */
+	$scope.nClass="none";
+	$scope.togaleCollapse = function (){
+		if($scope.nClass=="block")
+			$scope.nClass="none";
+		else
+			$scope.nClass="block";
+	}
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id/>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Card-Collapsibles</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-02-01 16:08:31</sys_created_on>
+        <sys_id>9dda47530759011095c1f4be7c1ed086</sys_id>
+        <sys_mod_count>9</sys_mod_count>
+        <sys_name>Card-Collapsibles</sys_name>
+        <sys_package display_value="Portal Util" source="x_26525_portal">52e536ea0700011095c1f4be7c1ed096</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</sys_scope>
+        <sys_update_name>sp_widget_9dda47530759011095c1f4be7c1ed086</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-02-01 16:23:29</sys_updated_on>
+        <template><![CDATA[<div>
+<!-- your widget template -->
+<button type="button" class="collapsible" ng-click="togaleCollapse()">Open Collapsible</button>
+<div style="display:{{nClass}}">
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+</div>]]></template>
+    </sp_widget>
+</record_update>

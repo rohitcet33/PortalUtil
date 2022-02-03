@@ -25,15 +25,15 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-01-26 04:10:54</sys_created_on>
         <sys_id>0eece5150751011095c1f4be7c1ed090</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>2</sys_mod_count>
         <sys_name>Kudos</sys_name>
         <sys_package display_value="Portal Util" source="x_26525_portal">52e536ea0700011095c1f4be7c1ed096</sys_package>
         <sys_policy/>
         <sys_scope display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</sys_scope>
         <sys_update_name>sys_db_object_0eece5150751011095c1f4be7c1ed090</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-01-26 04:10:56</sys_updated_on>
-        <update_access>false</update_access>
+        <sys_updated_on>2022-01-28 15:44:19</sys_updated_on>
+        <update_access>true</update_access>
         <user_role display_value="x_26525_portal.kudoboard_user" name="x_26525_portal.kudoboard_user">e9bae9510751011095c1f4be7c1ed06b</user_role>
         <ws_access>true</ws_access>
     </sys_db_object>
