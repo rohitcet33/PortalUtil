@@ -26,7 +26,7 @@
   /* populate the 'data' object */
   /* e.g., data.table = $sp.getValue('table'); */
 	data.id=$sp.getParameter('taget');
-	data.imComments = $sp.getWidget('widget-ticket-conversation', {
+	data.imComments = $sp.getWidget('widget-ticket-conversation-util', {
 			sys_id: data.id,
 			table: 'x_26525_portal_kudos',
 		  includeExtended: true,
@@ -49,14 +49,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-01-28 04:47:01</sys_created_on>
         <sys_id>449884ca0711011095c1f4be7c1ed053</sys_id>
-        <sys_mod_count>11</sys_mod_count>
+        <sys_mod_count>12</sys_mod_count>
         <sys_name>Details Kudos</sys_name>
         <sys_package display_value="Portal Util" source="x_26525_portal">52e536ea0700011095c1f4be7c1ed096</sys_package>
         <sys_policy/>
         <sys_scope display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</sys_scope>
         <sys_update_name>sp_widget_449884ca0711011095c1f4be7c1ed053</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-01-28 14:59:26</sys_updated_on>
+        <sys_updated_on>2022-02-05 13:18:21</sys_updated_on>
         <template><![CDATA[<div>
   <h3>{{data.rec.title}}</h3>
   <div ng-bind-html="data.rec.message"></div>

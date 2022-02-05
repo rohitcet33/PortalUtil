@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="DELETE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_26525_portal.PortalUtil</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <name>PortalUtil</name>
+        <script><![CDATA[var PortalUtil = Class.create();
+PortalUtil.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    giphy: function() {
+        var keyword = this.getParameter('sysparm_keyword');
+		gs.info('Giphy line 5 '+keyword);
+        try {
+            var r = new sn_ws.RESTMessageV2('x_26525_portal.GIPHY', 'Default GET');
+            r.setStringParameterNoEscape('limit', '25');
+            r.setStringParameterNoEscape('keyword', keyword);
+            r.setStringParameterNoEscape('key', 'yYMoUuYA6ttMg6TZ8yo3j89m6Hy2VjVw');
+            var response = r.execute();
+            var responseBody = response.getBody();
+            var httpStatus = response.getStatusCode();
+			gs.info('Giphy line 14 '+responseBody);
+            return responseBody;
+        } catch (ex) {
+            var message = ex.message;
+        }
+    },
+    type: 'PortalUtil'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-02-05 13:35:05</sys_created_on>
+        <sys_id>6dbd83a80729411095c1f4be7c1ed088</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>PortalUtil</sys_name>
+        <sys_package display_value="Portal Util" source="x_26525_portal">52e536ea0700011095c1f4be7c1ed096</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</sys_scope>
+        <sys_update_name>sys_script_include_6dbd83a80729411095c1f4be7c1ed088</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-02-05 13:40:15</sys_updated_on>
+    </sys_script_include>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</application>
+        <file_path/>
+        <instance_id>f1495998dbfa445452dd2f17d49619a7</instance_id>
+        <instance_name>dev98914</instance_name>
+        <name>sys_script_include_6dbd83a80729411095c1f4be7c1ed088</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_script_include"&gt;&lt;sys_script_include action="INSERT_OR_UPDATE"&gt;&lt;access&gt;package_private&lt;/access&gt;&lt;active&gt;true&lt;/active&gt;&lt;api_name&gt;x_26525_portal.PortalUtil&lt;/api_name&gt;&lt;caller_access/&gt;&lt;client_callable&gt;true&lt;/client_callable&gt;&lt;description/&gt;&lt;name&gt;PortalUtil&lt;/name&gt;&lt;script&gt;&lt;![CDATA[var PortalUtil = Class.create();
+PortalUtil.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    giphy: function() {
+        var keyword = this.getParameter('sysparm_keyword');
+		gs.info('Giphy line 5 '+keyword);
+        try {
+            var r = new sn_ws.RESTMessageV2('x_26525_portal.GIPHY', 'Default GET');
+            r.setStringParameterNoEscape('limit', '25');
+            r.setStringParameterNoEscape('keyword', keyword);
+            r.setStringParameterNoEscape('key', 'yYMoUuYA6ttMg6TZ8yo3j89m6Hy2VjVw');
+            var response = r.execute();
+            var responseBody = response.getBody();
+            var httpStatus = response.getStatusCode();
+			gs.info('Giphy line 14 '+responseBody);
+            return responseBody;
+        } catch (ex) {
+            var message = ex.message;
+        }
+    },
+    type: 'PortalUtil'
+});]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_script_include&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-02-05 13:35:05&lt;/sys_created_on&gt;&lt;sys_id&gt;6dbd83a80729411095c1f4be7c1ed088&lt;/sys_id&gt;&lt;sys_mod_count&gt;3&lt;/sys_mod_count&gt;&lt;sys_name&gt;PortalUtil&lt;/sys_name&gt;&lt;sys_package display_value="Portal Util" source="x_26525_portal"&gt;52e536ea0700011095c1f4be7c1ed096&lt;/sys_package&gt;&lt;sys_policy&gt;read&lt;/sys_policy&gt;&lt;sys_scope display_value="Portal Util"&gt;52e536ea0700011095c1f4be7c1ed096&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_script_include_6dbd83a80729411095c1f4be7c1ed088&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-02-05 13:40:15&lt;/sys_updated_on&gt;&lt;/sys_script_include&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>2003391102</payload_hash>
+        <record_name>PortalUtil</record_name>
+        <reverted_from/>
+        <source>10963eea0700011095c1f4be7c1ed047</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-02-05 13:40:15</sys_created_on>
+        <sys_id>7f5f03e80729411095c1f4be7c1ed0f6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>17eca1d26ec0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-02-05 13:40:15</sys_updated_on>
+        <type>Script Include</type>
+        <update_guid>775f03e88129411049ce3a1b298203f6</update_guid>
+        <update_guid_history>775f03e88129411049ce3a1b298203f6:2003391102,4d0f43e8182941101bdf03dfd602df0d:1027929571,90be4728892941108c0209c0187cdedf:-1242011859,903ecb6839294110af47fd286181b48b:552543757</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-02-05 13:47:46</sys_created_on>
+        <sys_db_object display_value="" name="sys_script_include">sys_script_include</sys_db_object>
+        <sys_id>17226f92477f4ea9a98e1d1a62ce0f91</sys_id>
+        <sys_metadata>6dbd83a80729411095c1f4be7c1ed088</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>PortalUtil</sys_name>
+        <sys_package display_value="Portal Util" source="x_26525_portal">52e536ea0700011095c1f4be7c1ed096</sys_package>
+        <sys_parent/>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</sys_scope>
+        <sys_scope_delete display_value="">05589f24cf214a6080aa6db6bca66e90</sys_scope_delete>
+        <sys_update_name>sys_script_include_6dbd83a80729411095c1f4be7c1ed088</sys_update_name>
+        <sys_update_version display_value="sys_script_include_6dbd83a80729411095c1f4be7c1ed088">7f5f03e80729411095c1f4be7c1ed0f6</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-02-05 13:47:46</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
