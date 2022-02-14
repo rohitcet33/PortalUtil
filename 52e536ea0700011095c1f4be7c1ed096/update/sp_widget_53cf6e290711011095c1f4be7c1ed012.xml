@@ -1,10 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[api.controller=function($scope,spModal,$uibModal,spUtil) {
+        <client_script><![CDATA[api.controller=function($scope,spModal,$uibModal,spUtil,$element,snAttachmentHandler,i18n,spAriaUtil,$rootScope) {
   /* widget controller */
 	$scope.pop_title="";
   var c = this;
+	$scope.imgType="";
+	$scope.uploadNewProfilePicture = function($event) {
+		$event.stopPropagation();
+		var $el = $element.find('input[type=file]');
+		$el.click();
+	}	
+	$scope.attachFiles = function(files) {
+		var file = files.files[0];
+		var validImage = false;
+
+		switch(file.type) {
+			case 'image/jpeg':
+			case 'image/png':
+			case 'image/bmp':
+			case 'image/x-windows-bmp':
+			case 'image/gif':
+			case 'image/x-icon':
+			case 'image/svg+xml':
+				validImage = true;
+				break;
+			default:
+				break;
+		}
+		if(!validImage) {
+			alert(file.name + " " + i18n.getMessage("isn't a recognized image file format"));
+			return;
+		}
+		$scope.imageFile=file;
+		$scope.imageURL=URL.createObjectURL(file);
+	/*	snAttachmentHandler.create("live_profile", 'sys_id').uploadAttachment(file, {
+			sysparm_fieldname: "photo"
+		}).then(function(response) {
+				
+		});*/
+	}
+	
+	$scope.saveCard = function (){
+		c.data.action ="createCard";
+		c.data.nTitle = $scope.title;
+		c.data.ncomments = $scope.commentText;
+		c.data.nGiphy = $scope.giphyUrl;
+		c.data.nimgType=$scope.imgType;
+		c.server.update().then(function(){
+			c.data.action ="";
+			c.data.nTitle = "";
+			c.data.ncomments = "";
+			c.data.nGiphy = "";
+			c.data.nimgType="";
+			if($scope.imageFile){
+				snAttachmentHandler.create("x_26525_portal_kudos", c.data.newKudo).uploadAttachment($scope.imageFile, {
+				sysparm_fieldname: "photo"
+			}).then(function(response) {
+				window.location.reload();
+		});
+			}else{
+			window.location.reload();
+			}
+		});
+	}
+	$scope.giphySearch="";
+	$scope.giphyUrl="";
+	$scope.searchGiphy = function (){
+		 $scope.giphyUrl="";
+		 var ga = new GlideAjax('x_26525_portal.Util');
+   	 ga.addParam('sysparm_name', 'giphy');
+     ga.addParam('sysparm_keyword', $scope.giphySearch.trim());
+     ga.getXML(getData);
+	}
+	function getData(response) {
+   var giphy_data = response.responseXML.documentElement.getAttribute("answer");
+	 giphy_data=JSON.parse(giphy_data);
+		$scope.giphy_answer=giphy_data.data;
+	}
+	$scope.postGiphy = function(url){
+		$scope.giphy_answer="";
+		$scope.giphyUrl=url;
+	}
 	$scope.react = function(id,title){
 		$scope.pop_title=title;
 		var parameter={
@@ -29,7 +106,58 @@
 	}
 };]]></client_script>
         <controller_as>c</controller_as>
-        <css>@import url("https://fonts.googleapis.com/css2?family=Roboto&amp;display=swap");
+        <css>
+/* Style the tab */
+.tab {
+  overflow: hidden;
+ // border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  //border: 1px solid #ccc;
+  border-top: none;
+}
+
+.fade-scale {
+  transform: scale(0);
+  opacity: 0;
+  -webkit-transition: all .25s linear;
+  -o-transition: all .25s linear;
+  transition: all .25s linear;
+}
+
+.fade-scale.in {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto&amp;display=swap");
 * {
   box-sizing: border-box;
 }
@@ -130,6 +258,8 @@ body {
         <script><![CDATA[(function() {
   /* populate the 'data' object */
   /* e.g., data.table = $sp.getValue('table'); */
+	data.table='x_26525_portal_kudoboard';
+	data.sys_id="e2ed69550751011095c1f4be7c1ed00e";
 	var gr = new GlideRecord('x_26525_portal_kudoboard');
 	gr.addEncodedQuery('sys_id=e2ed69550751011095c1f4be7c1ed00e');
 	gr.query();
@@ -156,6 +286,19 @@ body {
 			objkudo.sys_created_on=kudo.getValue('sys_created_on');
 			objkudo.sys_id = kudo.getValue('sys_id');
 			objkudo.comments_count=kudo.getValue('comments_count') || 0;
+			if(kudo.getValue('image_type') == 'Image'){
+				var grAtt= new GlideRecord('sys_attachment');
+				grAtt.addEncodedQuery('table_sys_id='+kudo.sys_id);
+				grAtt.query();
+				if(grAtt.next()){
+					gs.addInfoMessage('Find out photo'+grAtt.sys_id.toString());
+					objkudo.image=grAtt.sys_id.toString()+'.iix';
+				}else{
+				objkudo.image='';
+				}
+			}else if(kudo.getValue('image_type') == 'Giphy'){
+				objkudo.image=kudo.getValue('giphy') || ''
+			}
 			kdo.push(objkudo);
 		}
 		obj.kudos=kdo;
@@ -176,6 +319,20 @@ body {
 		}
 		return 'a63421183740310042106710ce41f16a.iix';
 	}
+	if(input){
+	if(input.action =='createCard'){
+		var grc = new GlideRecord('x_26525_portal_kudos');
+		grc.kudoboard="e2ed69550751011095c1f4be7c1ed00e";
+		grc.title=input.nTitle;
+		grc.message=input.ncomments;
+		grc.giphy=input.nGiphy;
+		grc.active=true;
+		grc.image_type=input.nimgType;
+		grc.user=gs.getUserID();
+		grc.insert();
+		data.newKudo=grc.sys_id.toString();
+	}
+	}
 	
 })();]]></script>
         <servicenow>false</servicenow>
@@ -183,17 +340,71 @@ body {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-01-27 03:40:53</sys_created_on>
         <sys_id>53cf6e290711011095c1f4be7c1ed012</sys_id>
-        <sys_mod_count>138</sys_mod_count>
+        <sys_mod_count>280</sys_mod_count>
         <sys_name>Kudoboard</sys_name>
         <sys_package display_value="Portal Util" source="x_26525_portal">52e536ea0700011095c1f4be7c1ed096</sys_package>
         <sys_policy/>
         <sys_scope display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</sys_scope>
         <sys_update_name>sp_widget_53cf6e290711011095c1f4be7c1ed012</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-05 16:16:52</sys_updated_on>
+        <sys_updated_on>2022-02-14 12:48:07</sys_updated_on>
         <template><![CDATA[<div>
 <!-- your widget template -->
-  <i style="font-size:24px" class="fa" style="position: absolute; margin-left: 95%;font-size: 30px;">&#xf067;</i>
+  <i style="font-size:24px" class="fa" style="position: absolute; margin-left: 95%;font-size: 30px;" data-toggle="modal" data-target="#myModal">&#xf067;</i> 
+  
+<!-- Modal -->
+<div class="modal fade-scale" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">New Post</h4>
+      </div>
+      <div class="modal-body">
+        
+        <div class="tab">
+  			<button class="tablinks" onclick="openCity(event, 'image')" ng-click="imgType='Image'">Image</button>
+ 				<button class="tablinks" onclick="openCity(event, 'giphy')" ng-click="imgType='Giphy'">Giphy</button>
+				</div>
+        <div id="image" class="tabcontent">
+  				<input ng-show="false" type="file" ng-file-select="attachFiles({files: $files})" />
+           <button ng-click="uploadNewProfilePicture($event)" 
+                        ng-keypress="uploadNewProfilePicture($event)" type="button" 
+                        class="btn btn-default send-message">${Upload Picture}</button>
+          <div ng-if="imageURL"><img src="{{imageURL}}"  style="height: 145px; width: 165px;margin-top: 5px; margin-left: 30%;"></div>
+				</div>
+
+				<div id="giphy" class="tabcontent">
+  			<input type="text" class="form-control" aria-label="Default" name="search" placeholder="Search.." id="search" ng-model="giphySearch" style="width: 85%; float: left;"> 
+        <button class="btn btn-primary" ng-click="searchGiphy()">Search</button>
+          <div class="row" ng-if="giphy_answer && giphyUrl ==''" style="margin-top: 5px;">
+  				<div class="col-sm-4 col-md-4" ng-repeat="giph in giphy_answer" style="margin-top: -2px;">
+   				<div ng-click="postGiphy(giph.images.downsized_large.url)"><img src="{{giph.images.downsized_large.url}}"  style="height: 145px; width: 165px;"></div>
+  				</div>
+					</div>
+          <div ng-if="giphyUrl"><img src="{{giphyUrl}}"  style="height: 145px; width: 165px;margin-top: 5px; margin-left: 30%;"></div>
+				</div>
+        
+        <div class="form-group">
+      	<label for="inputdefault">Title</label>
+      	<input class="form-control" id="title" type="text" ng-model="title">
+        </div>
+        <div class="form-group">
+      	<label for="inputdefault">Message</label>
+        <sp-tinymce-editor auto-focus="true" attachment-guid = "-1" field="c.commentsField"  record-table-name="'x_26525_portal_kudos'" aria-label="{{c.commentsPrompt}}" ng-model-options="{}" ng-model="commentText" class="comment-input" id="comment"></sp-tinymce-editor>
+    		</div>
+        
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="saveCard()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  
   <h3 style="text-align: center;">Wellcome to Kudoboard</h3>
   <p style="margin-left: 5%;">Hi {{data.rec.user_display}} {{data.rec.short_description}}</p>
   <!-- {{data.rec}} -->
@@ -207,6 +418,20 @@ body {
     </div>
   </div>
 </div>
-]]></template>
+<script>
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>]]></template>
     </sp_widget>
 </record_update>

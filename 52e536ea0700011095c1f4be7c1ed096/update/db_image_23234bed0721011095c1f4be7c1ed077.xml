@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="db_image">
+    <db_image action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>Service Portal</category>
+        <format>png</format>
+        <height>21</height>
+        <image>cd5383ed0721011095c1f4be7c1ed0c2</image>
+        <name>searchicon.png</name>
+        <size_bytes>860</size_bytes>
+        <sys_class_name>db_image</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-02-08 15:21:14</sys_created_on>
+        <sys_id>23234bed0721011095c1f4be7c1ed077</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>searchicon.png</sys_name>
+        <sys_package display_value="Portal Util" source="x_26525_portal">52e536ea0700011095c1f4be7c1ed096</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</sys_scope>
+        <sys_update_name>db_image_23234bed0721011095c1f4be7c1ed077</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-02-08 15:21:33</sys_updated_on>
+        <thumbnail/>
+        <width>21</width>
+    </db_image>
+    <sys_attachment action="INSERT_OR_UPDATE">
+        <average_image_color>#e7e7e7</average_image_color>
+        <chunk_size_bytes>700000</chunk_size_bytes>
+        <compressed>true</compressed>
+        <content_type>image/png</content_type>
+        <file_name>image</file_name>
+        <hash>b1a6b5d559825167b7a072b20e754c9ec432096a498545a7c2d9744aa093d08b</hash>
+        <image_height>21</image_height>
+        <image_width>21</image_width>
+        <size_bytes>860</size_bytes>
+        <size_compressed>848</size_compressed>
+        <state>available</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-02-08 15:21:33</sys_created_on>
+        <sys_id>cd5383ed0721011095c1f4be7c1ed0c2</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-02-08 15:21:33</sys_updated_on>
+        <table_name>ZZ_YYdb_image</table_name>
+        <table_sys_id>23234bed0721011095c1f4be7c1ed077</table_sys_id>
+    </sys_attachment>
+    <sys_attachment_doc action="INSERT_OR_UPDATE">
+        <data>H4sIAAAAAAAAAA==</data>
+        <length>16</length>
+        <position>0</position>
+        <sys_attachment display_value="image" sys_id="cd5383ed0721011095c1f4be7c1ed0c2">cd5383ed0721011095c1f4be7c1ed0c2</sys_attachment>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-02-08 15:21:33</sys_created_on>
+        <sys_id>015383ed0721011095c1f4be7c1ed0c3</sys_id>
+    </sys_attachment_doc>
+    <sys_attachment_doc action="INSERT_OR_UPDATE">
+        <data>6wzwc+flkuJiYGDg9fRwCQLSoiDMwQYkV4ovnQakGIuD3J0Y1p2TeQnksKQ7+joyMGzs5/6TyArkcxZ4RBYzMAiVgDDjvTT5CqAgU5K3uwvD//b+M/tBSsoKHNOBxmgBsSZDgFiqIVBQtcQ1oiQlsSTVKrkoFUgxGBkYGusamOgaGoQYmFmZWloZmOsamFsZGPQ5dgaiaMjNT8lMq8St4b+M4VugBkmQhuD8tJLyxKJUhvLycr3MvOzi5MSCVL38ovTZ72ykgIoEQYpCMktyUhmKUxOLkjN0M5Pz8w41v6kF+kLL08UxxMJ/6RTP1a8cBFq1365R6HvgJRiuN1WHRfBo/VuvAhbWg0sXLYpWnyPw/Pc7zUuKF1d8eMeu6Fn+deWrVa/C6uoUmb//nrvssubaMG0ruX6bZ2W7NSV4gpQmPnifP8OFvZmx93hykdVclRYF18AKGbX+483rrmsfTTI8lWJk848vdsvllxfSNiu2Hz4o3CHhxPCobPfc/YZ8s5M2nvgftkFDac7ZNJmFIt5Lg0T42i2TLKR73WzYP95+69bo0BASejXljMZ+NvupXq02cvzdiuk/a+Jmm11+/TVjb9zmDy9LFsXoHX90nkOEVZCpY58wy82cabmJ7SIK/8M4QiSjj1zb8DR/yeXMbUdnPS1a2TtLMENahOme8sQOsz/zAjSObItQ3v1IcqHo/Im6XzhdMo4EhZgZs2y/rVtfz2Rm5KUQfbbjgGej+eyzx3I/9z4sOOEksHWVjcDHijl607nzuf9ef/9968rwByK22tyzfdS2Shofev01yEQq1dHFYP75lTdziuy9ynbLlu6OneWjdieoQ4j/WuRC+ctZW1fNl1jC7JciKCB5qZn9mdHyG4k7Y671bztSsnDL7Vw9lkWV71hmHNS8J3DQZs6jSZpTvZ4U7TQ5rR64IULnxxKF8iCJ7r919vJ8JdxzHusq280/X3PwwYpm8UBlA7ZjGgxlQPPjWrhbmX7W7Du/aP6N99+vZJj4HNqRIvCxvrvp8EOHr1Wx4m6zAl7YdzLdkd0a5bv/5QXNejHWE+q/JOYuWKX1l5l7eeqWuq7N54BJisHT1c9lnVNCEwArIDfmXAMAAA==</data>
+        <length>1120</length>
+        <position>1</position>
+        <sys_attachment display_value="image" sys_id="cd5383ed0721011095c1f4be7c1ed0c2">cd5383ed0721011095c1f4be7c1ed0c2</sys_attachment>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-02-08 15:21:33</sys_created_on>
+        <sys_id>815383ed0721011095c1f4be7c1ed0c3</sys_id>
+    </sys_attachment_doc>
+</record_update>

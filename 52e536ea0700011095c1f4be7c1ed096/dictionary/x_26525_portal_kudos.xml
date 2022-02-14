@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
-    <element audit="true" label="Kudos" max_length="40" name="x_26525_portal_kudos" sizeclass="5" type="collection">
+    <element audit="true" label="Kudos" max_length="40" name="x_26525_portal_kudos" sizeclass="17" type="collection">
         <element label="Active" max_length="40" name="active" type="boolean"/>
         <element attributes="edge_encryption_enabled=true" label="Comments" max_length="40" name="comments" type="journal_input"/>
         <element default="0" label="Comments Count" max_length="40" name="comments_count" read_only="true" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" label="Giphy" max_length="1024" name="giphy" type="url"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Image Type" max_length="40" name="image_type" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Image" sequence="0" value="Image"/>
+                <element inactive_on_update="false" label="Giphy" sequence="1" value="Giphy"/>
+            </choice>
+        </element>
         <element attributes="encode_utf8=false" label="Kudoboard" max_length="32" name="kudoboard" reference="x_26525_portal_kudoboard" type="reference"/>
         <element label="Message" max_length="65536" name="message" type="html"/>
         <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element attributes="pdf_cell_type=image" label="Photo" max_length="40" name="photo" type="user_image"/>
         <element attributes="edge_encryption_enabled=true" label="Title" max_length="100" name="title" type="string"/>
         <element attributes="encode_utf8=false" label="User" max_length="32" name="user" reference="sys_user" type="reference"/>
         <index name="index">
