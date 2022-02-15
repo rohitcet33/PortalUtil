@@ -6,22 +6,22 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-01-28 09:26:12</sys_created_on>
         <sys_id>d16845460715011095c1f4be7c1ed0e0</sys_id>
-        <sys_mod_count>63</sys_mod_count>
+        <sys_mod_count>69</sys_mod_count>
         <sys_name>Card-Article</sys_name>
         <sys_package display_value="Portal Util" source="x_26525_portal">52e536ea0700011095c1f4be7c1ed096</sys_package>
         <sys_policy/>
         <sys_scope display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</sys_scope>
         <sys_update_name>sp_ng_template_d16845460715011095c1f4be7c1ed0e0</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-14 12:46:55</sys_updated_on>
+        <sys_updated_on>2022-02-14 14:23:14</sys_updated_on>
         <template><![CDATA[  <div class="card">
     <div class="card-header">
-      <a href="?id=details_kudos&taget={{x.sys_id}}" taget="_blank" style="position: absolute; padding-left: 76%; padding-top: 7px;color:black"><i style="font-size:24px" class="fa">&#xf08e;</i></a>
+      <!--<a href="?id=details_kudos&taget={{x.sys_id}}" taget="_blank" style="position: absolute; padding-left: 76%; padding-top: 7px;color:black"><i style="font-size:24px" class="fa">&#xf08e;</i></a> -->
       <img src="{{x.image}}" alt="rover" ng-if ="x.image"/>
     </div>
     <div class="card-body">
       <div>
-        <span class="tag tag-teal">Technology</span>
+        <span class="tag tag-teal"><a href="?id=details_kudos&taget={{x.sys_id}}" style="color: black; text-decoration: none;">More Details</a></span>
       </div> 
       <h4>
         {{x.title}}

@@ -68,15 +68,20 @@
 	$scope.giphyUrl="";
 	$scope.searchGiphy = function (){
 		 $scope.giphyUrl="";
+		 $scope.giphySearch = encodeURI($scope.giphySearch);
 		 var ga = new GlideAjax('x_26525_portal.Util');
    	 ga.addParam('sysparm_name', 'giphy');
-     ga.addParam('sysparm_keyword', $scope.giphySearch.trim());
+     ga.addParam('sysparm_keyword', $scope.giphySearch);
      ga.getXML(getData);
 	}
 	function getData(response) {
    var giphy_data = response.responseXML.documentElement.getAttribute("answer");
+	 if(giphy_data){
 	 giphy_data=JSON.parse(giphy_data);
 		$scope.giphy_answer=giphy_data.data;
+	 }else{
+		 spUtil.addInfoMessage('No Search found');
+	 }
 	}
 	$scope.postGiphy = function(url){
 		$scope.giphy_answer="";
@@ -291,7 +296,7 @@ body {
 				grAtt.addEncodedQuery('table_sys_id='+kudo.sys_id);
 				grAtt.query();
 				if(grAtt.next()){
-					gs.addInfoMessage('Find out photo'+grAtt.sys_id.toString());
+					//gs.addInfoMessage('Find out photo'+grAtt.sys_id.toString());
 					objkudo.image=grAtt.sys_id.toString()+'.iix';
 				}else{
 				objkudo.image='';
@@ -340,14 +345,14 @@ body {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-01-27 03:40:53</sys_created_on>
         <sys_id>53cf6e290711011095c1f4be7c1ed012</sys_id>
-        <sys_mod_count>280</sys_mod_count>
+        <sys_mod_count>286</sys_mod_count>
         <sys_name>Kudoboard</sys_name>
         <sys_package display_value="Portal Util" source="x_26525_portal">52e536ea0700011095c1f4be7c1ed096</sys_package>
         <sys_policy/>
         <sys_scope display_value="Portal Util">52e536ea0700011095c1f4be7c1ed096</sys_scope>
         <sys_update_name>sp_widget_53cf6e290711011095c1f4be7c1ed012</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-14 12:48:07</sys_updated_on>
+        <sys_updated_on>2022-02-14 13:58:32</sys_updated_on>
         <template><![CDATA[<div>
 <!-- your widget template -->
   <i style="font-size:24px" class="fa" style="position: absolute; margin-left: 95%;font-size: 30px;" data-toggle="modal" data-target="#myModal">&#xf067;</i> 
